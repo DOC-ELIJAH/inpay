@@ -1,0 +1,27 @@
+.logo-handle{
+	width: 60%;
+	top: 4px;
+	position: relative;
+}
+
+.logo-fold-handle{
+	width: 92%;
+}
+
+.required-feilds{
+	color: red;
+}
+
+.add-item-btn{
+	display: flex;
+	justify-content: end;
+}
+
+.backdrop{
+	background-image: url("../images/others/login-3.png");
+}
+
+.title{
+	font-size: 12px !important;
+	padding-left: 14px !important;
+}
