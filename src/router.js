@@ -15,21 +15,6 @@ export default new Router({
 		component: ()=> import("./views/Home")
 	},
 	{
-		path: "/login",
-		name: "login",
-		component: ()=> import("./views/Login")
-	},
-	{
-		path: "/signup",
-		name: "signup",
-		component: ()=> import("./views/Signup")
-	},
-	{
-		path: "/forgot-password",
-		name: "forgot-password",
-		component: ()=> import("./views/ForgotPassword")
-	},
-	{
 		path: "/initial",
 		redirect: "/dashboard",
 		component: () => import("@/layouts/DashboardLayout"),
@@ -44,6 +29,32 @@ export default new Router({
 				components: { default: Withdrawal},
 			}
 		]
+	},
+	{	
+		path: "/auth",
+		component:() => import("@/layouts/AuthLayout"),
+		children:[
+			{
+				path: "/auth/login",
+				name: "login",
+				component: ()=> import("./views/Login")
+			},
+			{
+				path: "/auth/signup",
+				name: "signup",
+				component: ()=> import("./views/Signup")
+			},{
+				path: "/auth/otp",
+				name: "otp",
+				component: ()=> import("./views/Otp")
+			},
+			{
+				path: "/forgot-password",
+				name: "forgot-password",
+				component: ()=> import("./views/ForgotPassword")
+			}
+		]
 	}
+
   ]
 });
