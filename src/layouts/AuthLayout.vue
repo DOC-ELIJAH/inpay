@@ -18,7 +18,7 @@
                         src="@/assets/images/logo/INPAY.png"
                         width="20%"
                       />
-                      <h2 class="m-b-0">{{ name}}</h2>
+                      <h2 class="m-b-0">{{ name }}</h2>
                     </div>
                     <router-view></router-view>
                   </div>
@@ -41,3 +41,13 @@
       </div>
     </div>
 </template>
+
+<script>
+ module.exports = {
+        data(){
+          return {
+            // name: 'Sign Up'
+          }
+        }
+    }
+</script>
