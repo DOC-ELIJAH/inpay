@@ -5,7 +5,7 @@
                     >
                       <h2 class="m-b-0">You are a step closer to creating an INPAY account.</h2>
                     </div>
-                    <form novalidate>
+                    <form @submit.prevent="submit">
 
                       <div class="form-group">
                         <label class="font-weight-semibold" for="firstName">First Name <span class="required-feilds">*</span></label>
@@ -22,7 +22,11 @@
 
                       <div class="form-group">
                         <label class="font-weight-semibold" for="lastName">Last Name <span class="required-feilds">*</span></label>
-                        <input type="text" name="lastName" v-model="lastName" class="form-control" placeholder="Last Name" required>
+                        <input type="text" name="lastName" v-model="lastName" class="form-control" placeholder="Last Name" 
+                        required
+                         @input="$v.lastName.$touch()"
+                        @blur="$v.lastName.$touch()"
+                        >
                       </div>
 
                       <div class="form-group">
@@ -53,7 +57,12 @@
                         <label class="font-weight-semibold" for="phoneNumber">Phone Number <span class="required-feilds">*</span></label>
                         <div class="input-affix m-b-10">
                           <i class="prefix-icon anticon anticon-phone"></i>
-                          <input type="tel" class="form-control" name="phoneNumber" v-model="phoneNumber" placeholder="08082821122" pattern="^[0]\d{8,10}$" onkeypress="return /\d/.test(String.fromCharCode(((event||window.event).which||(event||window.event).which)));" maxlength="11" required>  
+                          <input type="tel" class="form-control" 
+                          name="phoneNumber" 
+                          v-model="phoneNumber" 
+                          placeholder="08082821122" 
+                          pattern="^[0]\d{8,10}$" 
+                          onkeypress="return /\d/.test(String.fromCharCode(((event||window.event).which||(event||window.event).which)));" maxlength="11" required>  
                         </div> 
                       </div>
 
@@ -86,7 +95,7 @@
 
                 <span class="font-size-13 text-muted d-block text-center">
                       Already have an account?
-                      <a class="blue" href="/login"> Login </a>
+                      <a class="blue" href="/auth/login"> Login </a>
                 </span>
                 </div>
 
@@ -100,6 +109,23 @@ export default {
       mixins: [validationMixin],
        validations: {
           firstName: {
+            required,
+          },
+          lastName: {
+            required,
+          },
+          businessName: {
+            required,
+          },
+          email: {
+            required,
+            email
+          },
+          phoneNumber: {
+            required,
+            maxLength: maxLength(11)
+          },
+          password: {
             required,
           }
         },

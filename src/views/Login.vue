@@ -64,7 +64,7 @@
             >
               <span class="font-size-13 text-muted">
                 Don't have an account?
-                <a class="small" href="/signup"> Signup</a>
+                <a class="small" href="/auth/signup"> Signup</a>
               </span>
               <button type="submit" class="btn btn-primary">Sign In</button>
             </div>
