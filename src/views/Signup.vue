@@ -5,11 +5,19 @@
                     >
                       <h2 class="m-b-0">You are a step closer to creating an INPAY account.</h2>
                     </div>
-                    <form @submit.prevent="processForm" class="needs-validation" method="post" role="form" novalidate>
+                    <form novalidate>
 
                       <div class="form-group">
                         <label class="font-weight-semibold" for="firstName">First Name <span class="required-feilds">*</span></label>
-                        <input type="text" name="firstName" v-model="firstName" class="form-control" placeholder="First Name" required>
+                        <input type="text" 
+                        name="firstName" 
+                        v-model="firstName" 
+                        class="form-control" 
+                        placeholder="First Name" 
+                        required
+                        @input="$v.firstName.$touch()"
+                        @blur="$v.firstName.$touch()"
+                        >
                       </div>
 
                       <div class="form-group">
@@ -69,7 +77,7 @@
                               <div class="invalid-feedback">Please enter at least one upper case.</div>
                         </div>
                              
-                      <button type="submit" class="btn btn-primary w-100 mb-3" >Create Account</button>
+                      <button @click="submit" class="btn btn-primary w-100 mb-3" >Create Account</button>
 
                       <span class="font-size-13 text-muted text-center d-block">
                         By clicking the “Create Account” button, you agree to INPAY's <a href="#" style="color: blue">terms of acceptable use</a>, <a href="#" style="color: blue">Merchant Agreement</a> and <a href="#" style="color: blue">Privacy Policy.</a>      
@@ -85,19 +93,30 @@
 </template>
 
 <script>
-  module.exports = {
-        data: () => ({
-          firstName: '',
-          lastName: '',
-          businessName: '',
-          email: '',
-          phoneNumber: '',
-          password: ''
-        }),
-        methods: {
-           processForm: function() {
-            console.log({ firstName: this.firstName, email: this.email });
+ import { validationMixin } from 'vuelidate'
+  import { required, maxLength, email } from 'vuelidate/lib/validators'
+
+export default {
+      mixins: [validationMixin],
+       validations: {
+          firstName: {
+            required,
           }
+        },
+        data: () => ({
+            firstName: '',
+            lastName: '',
+            businessName: '',
+            email: '',
+            phoneNumber: '',
+            password: ''
+         }),
+       
+        methods: {
+          submit () {
+            this.$v.$touch()
+          },
+           
         }
     }
 </script>
