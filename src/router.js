@@ -52,6 +52,11 @@ export default new Router({
 				path: "/forgot-password",
 				name: "forgot-password",
 				component: ()=> import("./views/ForgotPassword")
+			},
+			{
+				path: "/auth/reset-password",
+				name: "reset-password",
+				component: ()=> import("./views/ResetPassword")
 			}
 		]
 	}
