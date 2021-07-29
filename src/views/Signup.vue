@@ -1,8 +1,10 @@
 <template>
-<div>
-                    <div
-                      class="d-flex align-items-center justify-content-between m-b-30"
-                    >
+    <div>
+    <div v-if="errorMessage" class="alert alert-danger">{{this.errorMessage}}</div>
+    <div v-if="successMessage" class="alert alert-success">{{this.successMessage}}</div>
+      <div
+        class="d-flex align-items-center justify-content-between m-b-30"
+        >
                       <h2 class="m-b-0">You are a step closer to creating an INPAY account.</h2>
                     </div>
                     <form @submit.prevent="submit">
@@ -84,52 +86,49 @@
                               <!-- <span class="invalid-feedback">Please enter at least one upper case.</span> -->
                             </div>
                               <div class="invalid-feedback">Please enter at least one upper case.</div>
-                        </div>
-                             
+                        </div>  
                       <button @click="submit" class="btn btn-primary w-100 mb-3" >Create Account</button>
-
                       <span class="font-size-13 text-muted text-center d-block">
                         By clicking the “Create Account” button, you agree to INPAY's <a href="#" style="color: blue">terms of acceptable use</a>, <a href="#" style="color: blue">Merchant Agreement</a> and <a href="#" style="color: blue">Privacy Policy.</a>      
                       </span>
                     </form>
-
                 <span class="font-size-13 text-muted d-block text-center">
                       Already have an account?
                       <a class="blue" href="/auth/login"> Login </a>
                 </span>
                 </div>
-
 </template>
-
 <script>
  import { validationMixin } from 'vuelidate'
   import { required, maxLength, email } from 'vuelidate/lib/validators'
-
+  import { createAccount } from '../services/AccountServices'
 export default {
       mixins: [validationMixin],
        validations: {
-          firstName: {
-            required,
-          },
-          lastName: {
-            required,
-          },
-          businessName: {
-            required,
-          },
-          email: {
-            required,
-            email
-          },
-          phoneNumber: {
-            required,
-            maxLength: maxLength(11)
-          },
-          password: {
-            required,
-          }
+              firstName: {
+                required,
+              },
+              lastName: {
+                required,
+              },
+              // businessName: {
+              //   required,
+              // },
+              email: {
+                required,
+                email
+              },
+              phoneNumber: {
+                required,
+                maxLength: maxLength(11)
+              },
+              password: {
+                required,
+              }
         },
         data: () => ({
+          errorMessage:'',
+            successMessage:'',
             firstName: '',
             lastName: '',
             businessName: '',
@@ -140,7 +139,32 @@ export default {
        
         methods: {
           submit () {
-            this.$v.$touch()
+              this.$v.$touch();
+              if(this.$v.$invalid){
+                this.errorMessage="one or more field is not properly fill"
+                console.log(this.$v.$error)
+              }else{
+                 let payload={
+                  firstname:this.firstName,
+                  lastname:this.lastName,
+                  businessName:this.businessName,
+                  email:this.email,
+                  phone:this.phoneNumber,
+                  password:this.password
+                }
+                const result = createAccount(payload);
+                result.then(res=>{
+                  if(res.statusCode!=200){
+                    this.errorMessage="";
+                    res.errors.forEach(err=>{
+                      this.errorMessage=this.errorMessage+err.msg+' \n';
+                    })
+                  }else{
+                    this.successMessage="Account created successfully and a connfirmation email have been sent to you "
+                    console.log(res)
+                  }
+                })
+              }
           },
            
         }
