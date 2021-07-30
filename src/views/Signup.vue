@@ -1,6 +1,12 @@
 <template>
     <div>
-    <div v-if="errorMessage" class="alert alert-danger">{{this.errorMessage}}</div>
+    <div v-if="errorMessage" class="alert alert-danger">
+    <ul>
+        <li v-for="err in errorMessage">
+          {{err.msg}}
+        </li>
+    </ul>
+    </div>
     <div v-if="successMessage" class="alert alert-success">{{this.successMessage}}</div>
       <div
         class="d-flex align-items-center justify-content-between m-b-30"
@@ -31,13 +37,13 @@
                         >
                       </div>
 
-                      <div class="form-group">
-                        <label class="font-weight-semibold" for="businessName">Business Name <span class="required-feilds">*</span></label>
-                        <div class="input-affix">
-                           <i class="prefix-icon anticon anticon-bank"></i>
-                           <input type="text" name="businessName" v-model="businessName" class="form-control" placeholder="Business Name" required>
-                        </div>
-                      </div>
+                      <!-- <div class="form-group">
+                         <label class="font-weight-semibold" for="businessName">Business Name <span class="required-feilds">*</span></label>
+                         <div class="input-affix">
+                            <i class="prefix-icon anticon anticon-bank"></i>
+                            <input type="text" name="businessName" v-model="businessName" class="form-control" placeholder="Business Name" required>
+                         </div>
+                       </div>-->
 
                       <div class="form-group">
                         <label class="font-weight-semibold" for="email"
@@ -155,10 +161,10 @@ export default {
                 const result = createAccount(payload);
                 result.then(res=>{
                   if(res.statusCode!=200){
-                    this.errorMessage="";
-                    res.errors.forEach(err=>{
-                      this.errorMessage=this.errorMessage+err.msg+' \n';
-                    })
+                    this.errorMessage=res.errors
+                    // reds.errors.forEach(err=>{
+                    //   this.errorMessage=this.errorMessage+err.msg+' \n';
+                    // })
                   }else{
                     this.successMessage="Account created successfully and a connfirmation email have been sent to you "
                     console.log(res)
