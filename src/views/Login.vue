@@ -1,9 +1,16 @@
 <template>    
         <div>
+        <div v-if="errorMessage" class="alert alert-danger">
+        <ul>
+            <li v-for="err in errorMessage">
+              {{err}}
+            </li>
+        </ul>
+      </div>
         <a href="javascript:void(0)" class="float-right" @click="changeInput" >Login with {{inputType === 'email' ? 'Phone': 'Email'}}</a>
         <br>
         <hr>
-        <form novalidate>
+        <form @submit.prevent="handleSubmit">
           <div class="form-group" v-if="inputType === 'email'">
             <label class="font-weight-semibold" for="userName"
               >Email: <span class="required-feilds">*</span></label
@@ -13,6 +20,7 @@
               <input
                 type="email"
                 class="form-control"
+                v-model="email"
                 id="email"
                 placeholder="Email"
                 required
@@ -29,6 +37,7 @@
               <input
                 type="tel"
                 class="form-control"
+                v-model="phoneNumber"
                 id="phone"
                 placeholder="+234 703 445 2342"
                 required
@@ -52,6 +61,7 @@
               <input
                 type="password"
                 class="form-control"
+                v-model="password"
                 id="password"
                 placeholder="Password"
                 required
@@ -75,20 +85,65 @@
 
 <script>
 
-    module.exports = {
-        data(){
-          return {
-            inputType: 'email'
-          }
-        },
-        methods: {
-          changeInput(){
-            if (this.inputType === 'email'){
-                this.inputType = 'phone'
-            }
-            else this.inputType = 'email'
-          }
+import { userLogin } from '../services/AccountServices'
+export default {
+   data(){
+      return {
+        errorMessage:'',
+        inputType: 'email',
+        email: '',
+        password: '',
+        phoneNumber: '',
+        
+      }
+    },
+    methods: {
+      changeInput(){
+        if (this.inputType === 'email'){
+          this.inputType = 'phone'
+          
         }
+        else this.inputType = 'email'
+      },
+        handleSubmit(){
+        if (this.phoneNumber){
+          // this.inputType = 'phone'
+          let payload={
+              'login_type': 'phone',
+              'username':this.phoneNumber,
+              'password':this.password
+            }
+
+            const result = userLogin(payload);
+            console.log(errorMessage)
+            result.then(res=>{
+              if(res.statusCode!=200){
+                this.errorMessage=res.errors
+                console.log(errorMessage)
+              }else{
+                localStorage.setItem('token', res.data.token);
+              }
+            })  
+          
+        }
+        else 
+            this.inputType = 'email'
+            let payload={
+              'login_type': 'email',
+              'username':this.email,
+              'password':this.password
+            }
+
+            const result = userLogin(payload);
+            result.then(res=>{
+              if(res.statusCode!=200){
+                this.errorMessage=res.errors
+              }else{
+                this.$router.push({path:'/auth/otp'});
+              }
+            })  
+      }
     }
+}
 </script>
 
