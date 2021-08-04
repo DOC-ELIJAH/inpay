@@ -121,7 +121,7 @@ export default {
                 this.errorMessage=res.errors
                 console.log(errorMessage)
               }else{
-                localStorage.setItem('token', res.data.token);
+                 this.$router.push({path:'/auth/otp'});
               }
             })  
           

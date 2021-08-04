@@ -30,14 +30,21 @@ const { userOtp }=require("../services/AccountServices");
                   if(res.statusCode!=200){
                     this.errorMessage=res.errors
                   }else{
-                      console.log(res.access_token)
-                      localStorage.setItem("accessToken", res.access_token);
-                      localStorage.setItem("refreshToken", res.refresh_token);
-                    // localStorage.setItem('token', res.token);
+                      console.log(res.message.accessToken)
+                      localStorage.setItem("accessToken", res.message.accessToken);
+                      localStorage.setItem("refreshToken", res.message.refreshToken);
+                    // localStorage.setItem('token', res.data.access_token);
                       this.$router.push({path:'/'});
                   }
                 })  
              
+          },
+
+          login: function () {
+            const { username, password } = this
+            myLoginRoutine({ username, password }).then(() => {
+                this.$router.push('/')
+            })
           }
         }
     }
