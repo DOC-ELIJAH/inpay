@@ -31,7 +31,7 @@ const { userOtp }=require("../services/AccountServices");
                     this.errorMessage=res.errors
                   }else{
                       console.log(res.message.accessToken)
-                      localStorage.setItem("accessToken", res.message.accessToken);
+                      localStorage.setItem("token", res.message.accessToken);
                       localStorage.setItem("refreshToken", res.message.refreshToken);
                     // localStorage.setItem('token', res.data.access_token);
                       this.$router.push({path:'/'});
