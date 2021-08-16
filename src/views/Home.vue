@@ -10,7 +10,6 @@
         <a class="btn btn-warning btn-lg" href="/auth/signup"> Sighup </a>
       </div>
 </div>
-
 </template>
 
 <script>
