@@ -13,8 +13,9 @@ axios.interceptors.request.use(
   request=>{
     request.headers.ContertType='application/json';
     request.headers.Accept='application/json';
+    //request.headers.Authorization='Bearer '+localStorage.getItem('user-token')
     if(request.url.includes('api')){
-      request.headers.Authorization='Bearer '+localStorage.getItem('token')
+      request.headers.Authorization='Bearer '+localStorage.getItem('user-token')
     }
     console.log(request)
     return request;
@@ -23,6 +24,10 @@ axios.interceptors.request.use(
     return Promise.reject(error)
   }
 );
+
+
+
+
 Vue.use(VueAxios, axios, Vuelidate)
 
 new Vue({

@@ -1,11 +1,11 @@
 <template>
     <div>
     <div v-if="errorMessage" class="alert alert-danger">
-    <ul>
-        <li v-for="err in errorMessage">
-          {{err.msg}}
-        </li>
-    </ul>
+      <ul>
+          <li v-for="err in errorMessage">
+            {{err.msg}}
+          </li>
+      </ul>
     </div>
     <div v-if="successMessage" class="alert alert-success">{{this.successMessage}}</div>
       <div
@@ -105,74 +105,72 @@
                 </div>
 </template>
 <script>
- import { validationMixin } from 'vuelidate'
+  import { validationMixin } from 'vuelidate'
+  import Datepicker from 'vuejs-datepicker'
   import { required, maxLength, email } from 'vuelidate/lib/validators'
   import { createAccount } from '../services/AccountServices'
-export default {
-      mixins: [validationMixin],
-       validations: {
-              firstName: {
-                required,
-              },
-              lastName: {
-                required,
-              },
-              // businessName: {
-              //   required,
-              // },
-              email: {
-                required,
-                email
-              },
-              phoneNumber: {
-                required,
-                maxLength: maxLength(11)
-              },
-              password: {
-                required,
-              }
-        },
-        data: () => ({
-          errorMessage:'',
-            successMessage:'',
-            firstName: '',
-            lastName: '',
-            businessName: '',
-            email: '',
-            phoneNumber: '',
-            password: ''
-         }),
-       
-        methods: {
-          submit () {
-              this.$v.$touch();
-              if(this.$v.$invalid){
-                this.errorMessage="one or more field is not properly fill"
-                console.log(this.$v.$error)
-              }else{
-                 let payload={
-                  firstname:this.firstName,
-                  lastname:this.lastName,
-                  businessName:this.businessName,
-                  email:this.email,
-                  phone:this.phoneNumber,
-                  password:this.password
+  export default {
+        mixins: [validationMixin],
+        validations: {
+                firstName: {
+                  required,
+                },
+                lastName: {
+                  required,
+                },
+                email: {
+                  required,
+                  email
+                },
+                phoneNumber: {
+                  required,
+                  maxLength: maxLength(11)
+                },
+                password: {
+                  required,
                 }
-                const result = createAccount(payload);
-                result.then(res=>{
-                  if(res.statusCode!=200){
-                    this.errorMessage=res.errors
-                    // reds.errors.forEach(err=>{
-                    //   this.errorMessage=this.errorMessage+err.msg+' \n';
-                    // })
-                  }else{
-                    this.successMessage="Account created successfully and a connfirmation email have been sent to you "
-                    console.log(res)
-                  }
-                })
-              }
           },
-           
-        }
-    }
+          data: () => ({
+            errorMessage:'',
+              successMessage:'',
+              firstName: '',
+              lastName: '',
+              businessName: '',
+              email: '',
+              phoneNumber: '',
+              password: ''
+          }),
+        
+          methods: {
+            submit () {
+                this.$v.$touch();
+                if(this.$v.$invalid){
+                  this.errorMessage="one or more field is not properly filled"
+                  console.log(this.$v.$error)
+                }else{
+                  let payload={
+                    firstname:this.firstName,
+                    lastname:this.lastName,
+                    businessName:this.businessName,
+                    email:this.email,
+                    phone:this.phoneNumber,
+                    password:this.password
+                  }
+                  const result = createAccount(payload);
+                  result.then(res=>{
+                    if(res.statusCode!=200){
+                      this.errorMessage=res.errors
+                      // reds.errors.forEach(err=>{
+                      //   this.errorMessage=this.errorMessage+err.msg+' \n';
+                      // })
+                    }else{
+                      this.successMessage="Account created successfully and a confirmation email have been sent to you "
+                      console.log(res)
+                    }
+                  })
+                }
+            },
+            
+          }
+      }
 </script>
