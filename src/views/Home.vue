@@ -7,7 +7,7 @@
         
        
         <a class="btn btn-info btn-lg" href="/auth/login"> Login </a>
-        <a class="btn btn-warning btn-lg" href="/auth/login"> Sighup </a>
+        <a class="btn btn-warning btn-lg" href="/auth/signup"> Sighup </a>
       </div>
 </div>
 
