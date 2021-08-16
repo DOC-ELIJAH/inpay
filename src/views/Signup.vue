@@ -1,11 +1,14 @@
 <template>
     <div>
-    <div v-if="errorMessage" class="alert alert-danger">
-      <ul>
-          <li v-for="err in errorMessage">
+    <div v-if="errorMessage || errorMessages"  class="d-flex justify-content-center alert alert-danger">
+      <div class="container">
+         <ul>
+          <li v-for="err in errorMessages">
             {{err.msg}}
           </li>
-      </ul>
+          <span v-if="errorMessage">{{errorMessage}}</span>
+        </ul>
+      </div>
     </div>
     <div v-if="successMessage" class="alert alert-success">{{this.successMessage}}</div>
       <div
@@ -93,7 +96,7 @@
                             </div>
                               <div class="invalid-feedback">Please enter at least one upper case.</div>
                         </div>  
-                      <button @click="submit" class="btn btn-primary w-100 mb-3" >Create Account</button>
+                      <button @click="submit" class="btn btn-primary w-100 mb-3">Create Account</button>
                       <span class="font-size-13 text-muted text-center d-block">
                         By clicking the “Create Account” button, you agree to INPAY's <a href="#" style="color: blue">terms of acceptable use</a>, <a href="#" style="color: blue">Merchant Agreement</a> and <a href="#" style="color: blue">Privacy Policy.</a>      
                       </span>
@@ -105,72 +108,81 @@
                 </div>
 </template>
 <script>
-  import { validationMixin } from 'vuelidate'
-  import Datepicker from 'vuejs-datepicker'
-  import { required, maxLength, email } from 'vuelidate/lib/validators'
-  import { createAccount } from '../services/AccountServices'
-  export default {
-        mixins: [validationMixin],
-        validations: {
-                firstName: {
-                  required,
-                },
-                lastName: {
-                  required,
-                },
-                email: {
-                  required,
-                  email
-                },
-                phoneNumber: {
-                  required,
-                  maxLength: maxLength(11)
-                },
-                password: {
-                  required,
-                }
-          },
-          data: () => ({
+import { validationMixin } from 'vuelidate'
+import { required, maxLength, email } from 'vuelidate/lib/validators'
+import { createAccount } from '../services/AccountServices'
+export default {
+      mixins: [validationMixin],
+       validations: {
+              firstName: {
+                required,
+              },
+              lastName: {
+                required,
+              },
+              // businessName: {
+              //   required,
+              // },
+              email: {
+                required,
+                email
+              },
+              phoneNumber: {
+                required,
+                maxLength: maxLength(11)
+              },
+              password: {
+                required,
+              }
+        },
+        data: () => ({
+          errorMessages:'',
+            successMessage:'',
             errorMessage:'',
-              successMessage:'',
-              firstName: '',
-              lastName: '',
-              businessName: '',
-              email: '',
-              phoneNumber: '',
-              password: ''
-          }),
-        
-          methods: {
-            submit () {
-                this.$v.$touch();
-                if(this.$v.$invalid){
-                  this.errorMessage="one or more field is not properly filled"
-                  console.log(this.$v.$error)
-                }else{
-                  let payload={
-                    firstname:this.firstName,
-                    lastname:this.lastName,
-                    businessName:this.businessName,
-                    email:this.email,
-                    phone:this.phoneNumber,
-                    password:this.password
-                  }
-                  const result = createAccount(payload);
-                  result.then(res=>{
-                    if(res.statusCode!=200){
-                      this.errorMessage=res.errors
-                      // reds.errors.forEach(err=>{
-                      //   this.errorMessage=this.errorMessage+err.msg+' \n';
-                      // })
-                    }else{
-                      this.successMessage="Account created successfully and a confirmation email have been sent to you "
-                      console.log(res)
-                    }
-                  })
+            firstName: '',
+            lastName: '',
+            businessName: '',
+            email: '',
+            phoneNumber: '',
+            password: ''
+         }),
+       
+        methods: {
+          submit () {
+              this.$v.$touch();
+              if(this.$v.$invalid){
+                this.errorMessage="one or more field is not properly fill"
+              }else{
+                let btn=document.querySelector(".btn-primary");
+                 btn.innerHTML='<div class="spinner-border text-info"></div>'
+                 btn.setAttribute("disabled", true)
+                 
+                 let payload={
+                  firstname:this.firstName,
+                  lastname:this.lastName,
+                  businessName:this.businessName,
+                  email:this.email,
+                  phone:this.phoneNumber,
+                  password:this.password
                 }
-            },
-            
-          }
-      }
+                const result = createAccount(payload);
+                result.then(res=>{
+                  if(res.statusCode!=200){
+                    this.errorMessages=res.errors
+                     btn.innerHTML='Create Account'
+                      btn.removeAttribute("disabled", null)
+                  }else{
+                    this.successMessage="Account created successfully and a connfirmation email have been sent to you "
+                  }
+                }).catch(err=>{
+                  this.errorMessage=err;
+                   btn.innerHTML='Create Account'
+                  btn.removeAttribute("disabled", null)
+                })
+              
+              }
+          },
+           
+        }
+    }
 </script>

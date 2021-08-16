@@ -1,5 +1,5 @@
 <template>
-        <div class="app">
+    <div class="app">
       <div
         class="container-fluid p-h-0 p-v-20 bg full-height d-flex backdrop"
       >
@@ -18,7 +18,7 @@
                         src="@/assets/images/logo/INPAY.png"
                         width="20%"
                       />
-                      <h2 class="m-b-0">{{ name }}</h2>
+                      <h2 class="m-b-0"></h2>
                     </div>
                     <router-view></router-view>
                   </div>

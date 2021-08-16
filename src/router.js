@@ -69,6 +69,11 @@ export default new Router({
 				path: "/auth/reset-password",
 				name: "reset-password",
 				component: ()=> import("./views/ResetPassword")
+			},
+			{
+				path: "/auth/account-confirm/:token",
+				name: "account-confirmation",
+				component: ()=> import("./views/AccountConfirmation")
 			}
 		]
 	},
