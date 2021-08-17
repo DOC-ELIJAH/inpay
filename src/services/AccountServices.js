@@ -8,9 +8,9 @@ export async function createAccount(data){
     return response.data;
 }
 
-export async function confirm(){
-    const response=await axios.get();
-
+export async function confirmAccount(token){
+    const response=await axios.get(`${baseUrl}account/verify/${token}`);
+    return response.data;
 }
 
 export async function userLogin(data){

@@ -1,12 +1,15 @@
 <template>    
         <div>
-        <div v-if="errorMessage" class="alert alert-danger">
-        <ul>
-            <li v-for="err in errorMessage">
-              {{err}}
-            </li>
-        </ul>
-      </div>
+          <div v-if="errorMessage" class="alert alert-danger">
+            <ul>
+                <li v-for="err in errorMessage">
+                  {{err}}
+                </li>
+            </ul>
+          </div>
+           <div v-if="successMessage" class="alert alert-info">
+                {{successMessage}}
+          </div>
         <a href="javascript:void(0)" class="float-right" @click="changeInput" >Login with {{inputType === 'email' ? 'Phone': 'Email'}}</a>
         <br>
         <hr>
@@ -87,6 +90,14 @@
 
 import { userLogin } from '../services/AccountServices'
 export default {
+
+  created(){
+    const confirm=localStorage.getItem('confirmed')
+    if(confirm!=null){
+      this.successMessage=confirm
+      localStorage.removeItem('confirmed')
+    }
+  },
    data(){
       return {
         errorMessage:'',
@@ -94,6 +105,7 @@ export default {
         email: '',
         password: '',
         phoneNumber: '',
+        successMessage:'',
         
       }
     },

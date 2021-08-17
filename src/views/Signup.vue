@@ -120,9 +120,7 @@ export default {
               lastName: {
                 required,
               },
-              // businessName: {
-              //   required,
-              // },
+             
               email: {
                 required,
                 email
@@ -141,7 +139,6 @@ export default {
             errorMessage:'',
             firstName: '',
             lastName: '',
-            businessName: '',
             email: '',
             phoneNumber: '',
             password: ''
@@ -160,19 +157,20 @@ export default {
                  let payload={
                   firstname:this.firstName,
                   lastname:this.lastName,
-                  businessName:this.businessName,
                   email:this.email,
                   phone:this.phoneNumber,
                   password:this.password
                 }
                 const result = createAccount(payload);
                 result.then(res=>{
-                  if(res.statusCode!=200){
+                  if(res.statusCode!=201){
                     this.errorMessages=res.errors
                      btn.innerHTML='Create Account'
                       btn.removeAttribute("disabled", null)
                   }else{
-                    this.successMessage="Account created successfully and a connfirmation email have been sent to you "
+                    this.successMessage=res.email_notify
+					 btn.innerHTML='Create Account'
+                     btn.removeAttribute("disabled", null)
                   }
                 }).catch(err=>{
                   this.errorMessage=err;
