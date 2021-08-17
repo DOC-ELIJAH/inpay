@@ -27,6 +27,17 @@ export default new Router({
 				path: "/withdraw",
 				name: "withdraw",
 				components: { default: Withdrawal},
+			},
+			{
+				path: "/merchant-profile",
+				name: "merchantprofile",
+				component: ()=> import("./views/MerchantProfile"),
+				//beforeEnter: ifAuthenticated,
+			},
+			{
+				path: "/merchant",
+				name:"/merchant",
+				component: ()=> import ("./views/Merchant")
 			}
 		]
 	},
@@ -43,7 +54,8 @@ export default new Router({
 				path: "/auth/signup",
 				name: "signup",
 				component: ()=> import("./views/Signup")
-			},{
+			},
+			{
 				path: "/auth/otp",
 				name: "otp",
 				component: ()=> import("./views/Otp")
@@ -57,9 +69,13 @@ export default new Router({
 				path: "/auth/reset-password",
 				name: "reset-password",
 				component: ()=> import("./views/ResetPassword")
+			},
+			{
+				path: "/auth/account-confirm/:token",
+				name: "account-confirmation",
+				component: ()=> import("./views/AccountConfirmation")
 			}
 		]
-	}
-
+	},
   ]
 });
