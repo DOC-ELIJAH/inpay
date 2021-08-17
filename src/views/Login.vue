@@ -1,12 +1,8 @@
 <template>    
         <div>
         <div v-if="errorMessage" class="alert alert-danger">
-        <ul>
-            <li v-for="err in errorMessage">
-              {{err}}
-            </li>
-        </ul>
-      </div>
+          <p>{{errorMessage}}</p>
+        </div>
         <a href="javascript:void(0)" class="float-right" @click="changeInput" >Login with {{inputType === 'email' ? 'Phone': 'Email'}}</a>
         <br>
         <hr>
@@ -94,6 +90,7 @@ export default {
         email: '',
         password: '',
         phoneNumber: '',
+        loading: "",
         
       }
     },
@@ -113,14 +110,14 @@ export default {
               'username':this.phoneNumber,
               'password':this.password
             }
-
+            this.loading = true;
             const result = userLogin(payload);
-            console.log(errorMessage)
             result.then(res=>{
               if(res.statusCode!=200){
-                this.errorMessage=res.errors
-                console.log(errorMessage)
+                this.loading = false;
+                this.errorMessage=res.message
               }else{
+                 this.loading = false;
                  this.$router.push({path:'/auth/otp'});
               }
             })  
@@ -133,12 +130,14 @@ export default {
               'username':this.email,
               'password':this.password
             }
-
+            this.loading = true;
             const result = userLogin(payload);
             result.then(res=>{
               if(res.statusCode!=200){
-                this.errorMessage=res.errors
+                this.loading = false;
+                this.errorMessage=res.message
               }else{
+                this.loading = false;
                 this.$router.push({path:'/auth/otp'});
               }
             })  
