@@ -1,15 +1,9 @@
 <template>    
         <div>
-        <div v-if="errorMessage" class="alert alert-danger">
-          <p>{{errorMessage}}</p>
-        </div>
           <div v-if="errorMessage" class="alert alert-danger">
-            <ul>
-                <li v-for="err in errorMessage">
-                  {{err}}
-                </li>
-            </ul>
+            <p>{{errorMessage}}</p>
           </div>
+          
            <div v-if="successMessage" class="alert alert-info">
                 {{successMessage}}
           </div>
