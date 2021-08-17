@@ -23,25 +23,25 @@ const { userOtp }=require("../services/AccountServices");
           return {
             errorMessage:'',
             otp: '',
-            loading: "",
             
           }
         },
         methods: {
            otpSubmit(){
-
+                let btn=document.querySelector(".btn-primary");
+                btn.innerHTML='<div class="spinner-border text-info"></div>'
+                btn.setAttribute("disabled", true)
                 let payload={
                   'otp_code':this.otp
                 }
-                this.loading = true;
                 const result = userOtp(payload);
                
                 result.then(res=>{
                   if(res.statusCode!=200){
-                    this.loading = false;
                     this.errorMessage=res.errors
+                    btn.innerHTML='Submit'
+                    btn.removeAttribute("disabled", null)
                   }else{
-                      this.loading = false;
                       localStorage.setItem("token", res.message.accessToken);
                       localStorage.setItem("refreshToken", res.message.refreshToken);
                       this.$router.push({path:'/'});

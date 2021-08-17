@@ -90,7 +90,6 @@ export default {
         email: '',
         password: '',
         phoneNumber: '',
-        loading: "",
         
       }
     },
@@ -104,7 +103,10 @@ export default {
       },
         handleSubmit(){
         if (this.phoneNumber){
-          // this.inputType = 'phone'
+          let btn=document.querySelector(".btn-primary");
+          btn.innerHTML='<div class="spinner-border text-info"></div>'
+          btn.setAttribute("disabled", true)
+
           let payload={
               'login_type': 'phone',
               'username':this.phoneNumber,
@@ -114,10 +116,10 @@ export default {
             const result = userLogin(payload);
             result.then(res=>{
               if(res.statusCode!=200){
-                this.loading = false;
                 this.errorMessage=res.message
+                  btn.innerHTML='Sign In'
+                  btn.removeAttribute("disabled", null)
               }else{
-                 this.loading = false;
                  this.$router.push({path:'/auth/otp'});
               }
             })  
@@ -125,6 +127,9 @@ export default {
         }
         else 
             this.inputType = 'email'
+            let btn=document.querySelector(".btn-primary");
+            btn.innerHTML='<div class="spinner-border text-info"></div>'
+            btn.setAttribute("disabled", true)
             let payload={
               'login_type': 'email',
               'username':this.email,
@@ -134,10 +139,10 @@ export default {
             const result = userLogin(payload);
             result.then(res=>{
               if(res.statusCode!=200){
-                this.loading = false;
                 this.errorMessage=res.message
+                btn.innerHTML='Sign In'
+                btn.removeAttribute("disabled", null)
               }else{
-                this.loading = false;
                 this.$router.push({path:'/auth/otp'});
               }
             })  
