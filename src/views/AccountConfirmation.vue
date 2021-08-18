@@ -17,7 +17,7 @@ export default {
         this.token=this.$route.params.token;
         const result=confirmAccount(this.token);
         result.then(res=>{
-            if(res.statusCode!=201){
+            if(res.statusCode!=200){
                 this.errorMessage=res.message;
             }else{
                 localStorage.setItem('confirmed', res.message)
