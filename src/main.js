@@ -8,6 +8,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import Vuelidate from 'vuelidate';
 
+
 Vue.config.productionTip = false
 axios.interceptors.request.use(
   request=>{
@@ -25,7 +26,17 @@ axios.interceptors.request.use(
   }
 );
 
-
+router.beforeEach((to, from, next) => {
+  if (to.meta.disableIfLoggedIn) {
+    const authUser = localStorage.getItem('token')
+      if (authUser) {
+          next({name: 'index'});
+      } else {
+          next();
+      }
+  }
+  next();
+});
 
 
 Vue.use(VueAxios, axios, Vuelidate)
