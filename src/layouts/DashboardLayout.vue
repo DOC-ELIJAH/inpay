@@ -22,6 +22,14 @@ import SidebarComponent from "../components/SidebarComponent.vue"
 
 export default 
  {
-  components: { SidebarComponent, HeaderComponent },   
+  components: { SidebarComponent, HeaderComponent }, 
+
+   created () {
+           tokne=localStorage.getItem('token')
+           if(!token){
+               this.$router.push({path:'/auth/login'});
+           }
+            this.fetchAuthenticatedUser()
+    },  
 };
 </script>
