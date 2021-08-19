@@ -91,7 +91,7 @@
     import { validationMixin } from 'vuelidate';
     import { required } from 'vuelidate/lib/validators';
     import axios from 'axios';
-    import { userProfile } from '../services/MerchantProfile';
+    import { userProfile, editProfile } from '../services/MerchantProfile';
 
     export default {
         mixins: [validationMixin],
@@ -144,7 +144,7 @@
             }
         },
         beforeRouteEnter (to, from, next) {
-            const token = localStorage.getItem('user-token')
+            const token = localStorage.getItem('token')
 
             return token ? next() : next('/auth/login')
         },
@@ -175,7 +175,7 @@
                 })
             },
             merchantCreate(){
-                const token = localStorage.getItem('user-token')
+                console.log("submit clicked")
                 const result = editProfile({
                     business_name: this.business_name,
                     full_address: this.full_address,
@@ -188,11 +188,6 @@
                     bank_id: this.bank_id,
                     account_type: this.account_type,
                     branch: this.branch
-                },
-                {
-                    headers: {
-                        Authorization :`Bearer ${token}`
-                    }
                 })
                 .then(res=>{
                     if(res.statusCode!=200){
