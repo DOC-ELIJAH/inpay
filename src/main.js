@@ -38,6 +38,11 @@ router.beforeEach((to, from, next) => {
   next();
 });
 
+export default {
+  created() {
+    
+  },
+}
 
 Vue.use(VueAxios, axios, Vuelidate)
 
