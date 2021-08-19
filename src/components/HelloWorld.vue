@@ -18,10 +18,8 @@
         <p class="subheading font-weight-regular">
           For help and collaboration with other Vuetify developers,
           <br>please join our online
-          <a
-            href="/auth/login"
-            target="_blank"
-          >Login</a>
+          <router-link to="/auth/login"
+          >Login</router-link>
           <a
             href="/auth/signup"
             target="_blank"
