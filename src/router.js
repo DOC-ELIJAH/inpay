@@ -48,17 +48,26 @@ export default new Router({
 			{
 				path: "/auth/login",
 				name: "login",
-				component: ()=> import("./views/Login")
+				component: ()=> import("./views/Login"),
+				meta: {
+					disableIfLoggedIn: true
+				}
 			},
 			{
 				path: "/auth/signup",
 				name: "signup",
-				component: ()=> import("./views/Signup")
+				component: ()=> import("./views/Signup"),
+				meta: {
+					disableIfLoggedIn: true
+				}
 			},
 			{
 				path: "/auth/otp",
 				name: "otp",
-				component: ()=> import("./views/Otp")
+				component: ()=> import("./views/Otp"),
+				meta: {
+					disableIfLoggedIn: true
+				}
 			},
 			{
 				path: "/forgot-password",
