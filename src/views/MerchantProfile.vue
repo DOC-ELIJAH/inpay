@@ -154,11 +154,11 @@
         methods: {
             fetchAuthenticatedUser(){
                 const token = localStorage.getItem('user-token')
-                userProfile({
+                userProfile(),{
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
-                })
+                }
                 .then(response=>{
                     this.business_name = response.data.data.business_name
                     this.full_address = response.data.data.full_address
