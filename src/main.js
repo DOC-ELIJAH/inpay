@@ -14,9 +14,9 @@ axios.interceptors.request.use(
   request=>{
     request.headers.ContertType='application/json';
     request.headers.Accept='application/json';
-    //request.headers.Authorization='Bearer '+localStorage.getItem('user-token')
+    request.headers.Authorization='Bearer '+localStorage.getItem('token')
     if(request.url.includes('api')){
-      request.headers.Authorization='Bearer '+localStorage.getItem('user-token')
+      request.headers.Authorization='Bearer '+localStorage.getItem('token')
     }
     console.log(request)
     return request;
