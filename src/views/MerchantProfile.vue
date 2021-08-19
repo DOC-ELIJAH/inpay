@@ -149,16 +149,12 @@
             return token ? next() : next('/auth/login')
         },
        created () {
-            this.fetchAuthenticatedUser()
+          
         },
         methods: {
             fetchAuthenticatedUser(){
                 const token = localStorage.getItem('user-token')
-                userProfile(),{
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                }
+                userProfile()
                 .then(response=>{
                     this.business_name = response.data.data.business_name
                     this.full_address = response.data.data.full_address
@@ -175,7 +171,6 @@
                 })
             },
             merchantCreate(){
-                console.log("submit clicked")
                 const result = editProfile({
                     business_name: this.business_name,
                     full_address: this.full_address,
