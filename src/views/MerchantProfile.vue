@@ -171,7 +171,6 @@
                 })
             },
             merchantCreate(){
-                console.log("submit clicked")
                 const result = editProfile({
                     business_name: this.business_name,
                     full_address: this.full_address,
