@@ -1,12 +1,12 @@
 <template>    
         <div>
-        <div v-if="errorMessage" class="alert alert-danger">
-        <ul>
-            <li v-for="err in errorMessage">
-              {{err}}
-            </li>
-        </ul>
-      </div>
+          <div v-if="errorMessage" class="alert alert-danger">
+            <p>{{errorMessage}}</p>
+          </div>
+          
+           <div v-if="successMessage" class="alert alert-info">
+                {{successMessage}}
+          </div>
         <a href="javascript:void(0)" class="float-right" @click="changeInput" >Login with {{inputType === 'email' ? 'Phone': 'Email'}}</a>
         <br>
         <hr>
@@ -87,6 +87,14 @@
 
 import { userLogin } from '../services/AccountServices'
 export default {
+
+  created(){
+    const confirm=localStorage.getItem('confirmed')
+    if(confirm!=null){
+      this.successMessage=confirm
+      localStorage.removeItem('confirmed')
+    }
+  },
    data(){
       return {
         errorMessage:'',
@@ -94,6 +102,7 @@ export default {
         email: '',
         password: '',
         phoneNumber: '',
+        successMessage:'',
         
       }
     },
@@ -107,19 +116,22 @@ export default {
       },
         handleSubmit(){
         if (this.phoneNumber){
-          // this.inputType = 'phone'
+          let btn=document.querySelector(".btn-primary");
+          btn.innerHTML='<div class="spinner-border text-info"></div>'
+          btn.setAttribute("disabled", true)
+
           let payload={
               'login_type': 'phone',
               'username':this.phoneNumber,
               'password':this.password
             }
-
+            this.loading = true;
             const result = userLogin(payload);
-            console.log(errorMessage)
             result.then(res=>{
               if(res.statusCode!=200){
-                this.errorMessage=res.errors
-                console.log(errorMessage)
+                this.errorMessage=res.message
+                  btn.innerHTML='Sign In'
+                  btn.removeAttribute("disabled", null)
               }else{
                  this.$router.push({path:'/auth/otp'});
               }
@@ -128,16 +140,21 @@ export default {
         }
         else 
             this.inputType = 'email'
+            let btn=document.querySelector(".btn-primary");
+            btn.innerHTML='<div class="spinner-border text-info"></div>'
+            btn.setAttribute("disabled", true)
             let payload={
               'login_type': 'email',
               'username':this.email,
               'password':this.password
             }
-
+            this.loading = true;
             const result = userLogin(payload);
             result.then(res=>{
               if(res.statusCode!=200){
-                this.errorMessage=res.errors
+                this.errorMessage=res.message
+                btn.innerHTML='Sign In'
+                btn.removeAttribute("disabled", null)
               }else{
                 this.$router.push({path:'/auth/otp'});
               }
