@@ -91,8 +91,7 @@
     import { validationMixin } from 'vuelidate';
     import { required } from 'vuelidate/lib/validators';
     import axios from 'axios';
-    import { myLoginRoutine } from '../services/AccountServices';
-    import { userProfile, userState, userBanks } from '../services/MerchantProfile';
+    import { userProfile, editProfile } from '../services/MerchantProfile';
 
     export default {
         mixins: [validationMixin],
@@ -104,6 +103,9 @@
                 required
             },
             state_id: {
+                required
+            },
+            date_of_birth: {
                 required
             },
             bvn_number: {
@@ -141,21 +143,35 @@
                 branch:''
             }
         },
-       // beforeRouteEnter (to, from, next) {
-           // const token = localStorage.getItem('user-token')
+        beforeRouteEnter (to, from, next) {
+            const token = localStorage.getItem('token')
 
-           // return token ? next() : next('/auth/login')
-       // },
-       //created () {
-            //this.fetchAuthenticatedUser()
-        //},
+            return token ? next() : next('/auth/login')
+        },
+       created () {
+          
+        },
         methods: {
-            //fetchAuthenticatedUser(){
-                //const token = localStorage.getItem('user-token')
-            //},
-            merchantCreate(){
+            fetchAuthenticatedUser(){
                 const token = localStorage.getItem('user-token')
-                const result = userProfile({
+                userProfile()
+                .then(response=>{
+                    this.business_name = response.data.data.business_name
+                    this.full_address = response.data.data.full_address
+                    this.date_of_birth = response.data.data.date_of_birth
+                    this.state_id = response.data.data.state_id
+                    this.city = response.data.data.city
+                    this.language = response.data.data.language
+                    this.bvn_number = response.data.data.bvn_number
+                    this.nin_number = response.data.data.nin_number
+                    this.account_name = response.data.data.account_name
+                    this.bank_id = response.data.data.bank_id
+                    this.account_type = response.data.data.account_type
+                    this.branch = response.data.data.branch
+                })
+            },
+            merchantCreate(){
+                const result = editProfile({
                     business_name: this.business_name,
                     full_address: this.full_address,
                     bvn_number: this.bvn_number,
@@ -167,11 +183,6 @@
                     bank_id: this.bank_id,
                     account_type: this.account_type,
                     branch: this.branch
-                },
-                {
-                    headers: {
-                        Authorization :`Bearer ${token}`
-                    }
                 })
                 .then(res=>{
                     if(res.statusCode!=200){

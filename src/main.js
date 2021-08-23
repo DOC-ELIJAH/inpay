@@ -8,14 +8,15 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import Vuelidate from 'vuelidate';
 
+
 Vue.config.productionTip = false
 axios.interceptors.request.use(
   request=>{
     request.headers.ContertType='application/json';
     request.headers.Accept='application/json';
-    //request.headers.Authorization='Bearer '+localStorage.getItem('user-token')
+    request.headers.Authorization='Bearer '+localStorage.getItem('token')
     if(request.url.includes('api')){
-      request.headers.Authorization='Bearer '+localStorage.getItem('user-token')
+      request.headers.Authorization='Bearer '+localStorage.getItem('token')
     }
     console.log(request)
     return request;
@@ -25,7 +26,17 @@ axios.interceptors.request.use(
   }
 );
 
-
+router.beforeEach((to, from, next) => {
+  if (to.meta.disableIfLoggedIn) {
+    const authUser = localStorage.getItem('token')
+      if (authUser) {
+          next({name: 'index'});
+      } else {
+          next();
+      }
+  }
+  next();
+});
 
 
 Vue.use(VueAxios, axios, Vuelidate)
