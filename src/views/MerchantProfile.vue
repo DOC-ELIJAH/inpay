@@ -26,7 +26,10 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="stateID">State ID <span class="required-feilds">*</span></label>
-                                <input type="number" class="form-control" v-model="state_id" id="stateID" placeholder="State ID">
+                                <select class="form-control" v-model="state_id" id="stateID">
+                                    <option value="">Select State</option>
+                                    <option v-for="state in states" value="state.id">{{state.state_name}}</option>
+                                </select>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="city">City</label>
@@ -35,9 +38,8 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="language" v-model="language">Language</label>
-                                <input >
-                                <select class="custom-select" style="min-width: 180px;" required>
+                                <label for="language">Language</label>
+                                <select v-model="language" id="language" class="custom-select" style="min-width: 180px;" required>
                                     <option selected>Select Language</option>
                                     <option value="yoruba">Yoruba</option>
                                     <option value="igbo">Igbo</option>
@@ -66,7 +68,10 @@
                             </div>
                                 <div class="form-group col-md-6">
                                 <label for="bankID">Bank ID <span class="required-feilds">*</span></label>
-                                <input type="number" class="form-control" v-model="bank_id" id="bankID" name="bankID" placeholder="Bank ID">
+                                <select class="form-control" v-model="bank_id" id="stateID">
+                                    <option value="">Select Bank</option>
+                                    <option v-for="bank in banks" value="bank.id">{{bank.bank_name}}</option>
+                                </select>
                             </div>
                         </div>
 
@@ -91,8 +96,8 @@
     import { validationMixin } from 'vuelidate';
     import { required } from 'vuelidate/lib/validators';
     import axios from 'axios';
-    import { userProfile, editProfile,  } from '../services/MerchantProfile';
-
+    import { userProfile, editProfile } from '../services/MerchantServices.js';
+    import { getBanks, getStates } from '../services/BaseServices.js';
     export default {
         mixins: [validationMixin],
         validations: {
@@ -123,6 +128,8 @@
         },
         data(){
             return {
+                states:'',
+                banks:'',
                 successMessage:'',
                 errorMessage:'',
                 business_name:'',
@@ -131,11 +138,7 @@
                 bvn_number:'',
                 nin_number:'',
                 city:'',
-                language:{
-                    Yoruba:'',
-                    Igbo:'',
-                    Hausa:''
-                },
+                language:'',
                 date_of_birth:'',
                 account_name:'',
                 bank_id:'',
@@ -143,54 +146,75 @@
                 branch:''
             }
         },
-       //created () {
-           //this.fetchAuthenticatedUser()
-        //},
+        // beforeRouteEnter (to, from, next) {
+        //     const token = localStorage.getItem('token')
+
+        //     return token ? next() : next('/auth/login')
+        // },
+       created () {
+           this.getBaseData();
+          this.fetchAuthenticatedUser();
+        },
         methods: {
-            //fetchAuthenticatedUser(){
-                //const token = localStorage.getItem('token')
-                //userProfile()
-                //.then(response=>{
-                    //this.business_name = response.data.data.business_name
-                    //this.full_address = response.data.data.full_address
-                    //this.date_of_birth = response.data.data.date_of_birth
-                    //this.state_id = response.data.data.state_id
-                    //this.city = response.data.data.city
-                    //this.language = response.data.data.language
-                    //this.bvn_number = response.data.data.bvn_number
-                    //this.nin_number = response.data.data.nin_number
-                    //this.account_name = response.data.data.account_name
-                    //this.bank_id = response.data.data.bank_id
-                    //this.account_type = response.data.data.account_type
-                    //this.branch = response.data.data.branch
-                //})
-            //},
+            fetchAuthenticatedUser(){
+                userProfile()
+                .then(response=>{
+                    this.business_name = response.data.data.business_name
+                    this.full_address = response.data.data.full_address
+                    this.date_of_birth = response.data.data.date_of_birth
+                    this.state_id = response.data.data.state_id
+                    this.city = response.data.data.city
+                    this.language = response.data.data.language
+                    this.bvn_number = response.data.data.bvn_number
+                    this.nin_number = response.data.data.nin_number
+                    this.account_name = response.data.data.account_name
+                    this.bank_id = response.data.data.bank_id
+                    this.account_type = response.data.data.account_type
+                    this.branch = response.data.data.branch
+                })
+            },
             merchantCreate(){
-                const result = editProfile({
-                    business_name: this.business_name,
-                    full_address: this.full_address,
-                    state_id: this.state_id,
-                    bvn_number: this.bvn_number,
-                    nin_number: this.nin_number,
-                    city: this.city,
-                    language: this.language,
-                    date_of_birth: this.date_of_birth,
-                    account_name: this.account_name,
-                    bank_id: this.bank_id,
-                    account_type: this.account_type,
-                    branch: this.branch
-                })
+              
+                    let payload={
+                        business_name: this.business_name,
+                        full_address: this.full_address,
+                        bvn_number: this.bvn_number,
+                        nin_number: this.nin_number,
+                        city: this.city,
+                        language: this.language,
+                        date_of_birth: this.date_of_birth,
+                        account_name: this.account_name,
+                        bank_id: this.bank_id,
+                        account_type: this.account_type,
+                        branch: this.branch,
+                        state_id:this.state_id
+                    };
+                   // console.log(payload)
+                    // return;
+                    const result = editProfile(payload)
+                    .then(res=>{
+                        if(res.statusCode!=200){
+                            this.errorMessage=res.errors
+                        }else{
+                            this.successMessage="Profile updated successfully"
+                            this.$router.push({path:'/merchant'});
+                        }
+                    })
+            },
+
+            getBaseData(){
+                getStates()
                 .then(res=>{
-                    if(res.statusCode!=200){
-                        this.errorMessage=res.errors
-                    }else{
-                        this.successMessage="Profile updated successfully"
-                        console.log(res)
-                        this.$router.push({path:'/merchant'});
-                    }
-                })
-                
-                
+                    this.states=res.message.data
+                }).catch(err=>{
+                    
+                });
+                getBanks()
+                .then(res=>{
+                    this.banks=res
+                }).catch(err=>{
+
+                });
             }
         },
     }
