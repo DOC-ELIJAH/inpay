@@ -26,7 +26,7 @@ export default
   components: { SidebarComponent, HeaderComponent }, 
 
     created () {
-      //    this.fetchAuthenticatedUser();
+         this.fetchAuthenticatedUser();
     },
 
     methods: {
