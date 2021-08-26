@@ -7,6 +7,7 @@ import '@/assets/css/custom.css'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import Vuelidate from 'vuelidate';
+import VueSweetalert2 from 'vue-sweetalert2';
 
 
 Vue.config.productionTip = false
@@ -18,28 +19,16 @@ axios.interceptors.request.use(
     if(request.url.includes('api')){
       request.headers.Authorization='Bearer '+localStorage.getItem('token')
     }
-    console.log(request)
+    //console.log(request)
     return request;
   },
   error=>{
     return Promise.reject(error)
   }
-);
-
-router.beforeEach((to, from, next) => {
-  if (to.meta.disableIfLoggedIn) {
-    const authUser = localStorage.getItem('token')
-      if (authUser) {
-          next({name: 'index'});
-      } else {
-          next();
-      }
-  }
-  next();
-});
+)
 
 
-Vue.use(VueAxios, axios, Vuelidate)
+Vue.use(VueAxios, axios, Vuelidate, VueSweetalert2)
 
 new Vue({
   vuetify,

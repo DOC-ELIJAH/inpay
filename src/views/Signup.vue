@@ -29,15 +29,24 @@
                         @input="$v.firstName.$touch()"
                         @blur="$v.firstName.$touch()"
                         >
+                        <div class="invalid" v-if="$v.firstName.$dirty && $v.firstName.$invalid">Firstname is required</div>
+                        <div class="invalid" v-if="errors.firstName">{{errors.firstName}}</div>
                       </div>
-
+                      
                       <div class="form-group">
                         <label class="font-weight-semibold" for="lastName">Last Name <span class="required-feilds">*</span></label>
-                        <input type="text" name="lastName" v-model="lastName" class="form-control" placeholder="Last Name" 
+                        <input 
+                          type="text" 
+                          name="lastName" 
+                          v-model="lastName" 
+                          class="form-control" 
+                          placeholder="Last Name" 
                         required
                          @input="$v.lastName.$touch()"
                         @blur="$v.lastName.$touch()"
                         >
+                        <div class="invalid" v-if="$v.lastName.$dirty && $v.lastName.$invalid">Lastname is required</div>
+                        <div class="invalid" v-if="errors.lastName">{{errors.lastName}}</div>
                       </div>
 
                       <!-- <div class="form-group">
@@ -62,6 +71,8 @@
                             required
                           />
                         </div>
+                        <div class="invalid" v-if="$v.email.$dirty && $v.email.$invalid">pls provide a valid email</div>
+                        <div class="invalid" v-if="errors.email">{{errors.email}}</div>
                       </div>
 
                       <div class="form-group">
@@ -75,6 +86,8 @@
                           pattern="^[0]\d{8,10}$" 
                           onkeypress="return /\d/.test(String.fromCharCode(((event||window.event).which||(event||window.event).which)));" maxlength="11" required>  
                         </div> 
+                       <div class="invalid" v-if="$v.phoneNumber.$dirty && $v.phoneNumber.$invalid">phone number is required</div>
+                          <div class="invalid" v-if="errors.phoneNumber">{{errors.phoneNumber}}</div>
                       </div>
 
                         <div class="form-group">
@@ -134,18 +147,32 @@ export default {
               }
         },
         data: () => ({
-          errorMessages:'',
+            errorMessages:'',
             successMessage:'',
             errorMessage:'',
             firstName: '',
             lastName: '',
             email: '',
             phoneNumber: '',
-            password: ''
+            password: '',
+            errors :{
+              firstName: '',
+              lastName: '',
+              email: '',
+              phoneNumber: '',
+              password: ''
+            }
          }),
        
         methods: {
           submit () {
+            this.errorMessages=''
+            this.errorMessage=''
+            this.errors.firstName=''
+            this.errors.lastName=''
+            this.errors.email=''
+            this.errors.phoneNumber=''
+            this.errors.password=''
               this.$v.$touch();
               if(this.$v.$invalid){
                 this.errorMessage="one or more field is not properly fill"
@@ -165,12 +192,21 @@ export default {
                 result.then(res=>{
                   if(res.statusCode!=201){
                     this.errorMessages=res.errors
-                     btn.innerHTML='Create Account'
-                      btn.removeAttribute("disabled", null)
+                    this.errorMessages.forEach(e=>{
+                       if(e.msg.includes('E-mail')){
+                         this.errors.email=e.msg
+                       }
+
+                      if(e.msg.includes('Phone')){
+                         this.errors.phoneNumber=e.msg
+                       }
+                    })
+                    btn.innerHTML='Create Account'
+                    btn.removeAttribute("disabled", null)
                   }else{
                     this.successMessage=res.email_notify
-					 btn.innerHTML='Create Account'
-                     btn.removeAttribute("disabled", null)
+					          btn.innerHTML='Create Account'
+                    btn.removeAttribute("disabled", null)
                   }
                 }).catch(err=>{
                   this.errorMessage=err;

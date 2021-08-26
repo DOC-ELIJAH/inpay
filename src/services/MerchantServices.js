@@ -1,5 +1,5 @@
 import axios from "axios";
-import createAccount from '../services/AccountServices';
+import createAccount from './AccountServices';
 const baseUrl=window.location.protocol+"//"+window.location.hostname+':5000/v1/';
 
 
@@ -13,7 +13,7 @@ export async function editProfile(data){
 
 export async function userProfile(){
     let result={};
-    const response=await axios.get(`${baseUrl}merchant/get-merchant-by-id-phone/:type/:value`)
+    const response=await axios.get(`${baseUrl}merchant/get-merchant-profile`)
     console.log(response);
     return response.data;
 }
