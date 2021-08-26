@@ -35,8 +35,8 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="language">Language</label>
-                                <input v-model="language" id="language">
+                                <label for="language" v-model="language">Language</label>
+                                <input >
                                 <select class="custom-select" style="min-width: 180px;" required>
                                     <option selected>Select Language</option>
                                     <option value="yoruba">Yoruba</option>
@@ -91,7 +91,7 @@
     import { validationMixin } from 'vuelidate';
     import { required } from 'vuelidate/lib/validators';
     import axios from 'axios';
-    import { userProfile, editProfile } from '../services/MerchantProfile';
+    import { userProfile, editProfile,  } from '../services/MerchantProfile';
 
     export default {
         mixins: [validationMixin],
@@ -143,37 +143,33 @@
                 branch:''
             }
         },
-        beforeRouteEnter (to, from, next) {
-            const token = localStorage.getItem('token')
-
-            return token ? next() : next('/auth/login')
-        },
-       created () {
-          
-        },
+       //created () {
+           //this.fetchAuthenticatedUser()
+        //},
         methods: {
-            fetchAuthenticatedUser(){
-                const token = localStorage.getItem('user-token')
-                userProfile()
-                .then(response=>{
-                    this.business_name = response.data.data.business_name
-                    this.full_address = response.data.data.full_address
-                    this.date_of_birth = response.data.data.date_of_birth
-                    this.state_id = response.data.data.state_id
-                    this.city = response.data.data.city
-                    this.language = response.data.data.language
-                    this.bvn_number = response.data.data.bvn_number
-                    this.nin_number = response.data.data.nin_number
-                    this.account_name = response.data.data.account_name
-                    this.bank_id = response.data.data.bank_id
-                    this.account_type = response.data.data.account_type
-                    this.branch = response.data.data.branch
-                })
-            },
+            //fetchAuthenticatedUser(){
+                //const token = localStorage.getItem('token')
+                //userProfile()
+                //.then(response=>{
+                    //this.business_name = response.data.data.business_name
+                    //this.full_address = response.data.data.full_address
+                    //this.date_of_birth = response.data.data.date_of_birth
+                    //this.state_id = response.data.data.state_id
+                    //this.city = response.data.data.city
+                    //this.language = response.data.data.language
+                    //this.bvn_number = response.data.data.bvn_number
+                    //this.nin_number = response.data.data.nin_number
+                    //this.account_name = response.data.data.account_name
+                    //this.bank_id = response.data.data.bank_id
+                    //this.account_type = response.data.data.account_type
+                    //this.branch = response.data.data.branch
+                //})
+            //},
             merchantCreate(){
                 const result = editProfile({
                     business_name: this.business_name,
                     full_address: this.full_address,
+                    state_id: this.state_id,
                     bvn_number: this.bvn_number,
                     nin_number: this.nin_number,
                     city: this.city,

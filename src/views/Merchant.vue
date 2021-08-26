@@ -13,12 +13,12 @@
                     </div>
                     <div class="col-md-6">
                         <div class="profile-head">
-                                    <h5>
-                                        Kshiti Ghelani
-                                    </h5>
-                                    <h6>
-                                        Web Developer and Designer
-                                    </h6>
+                            <h5>
+                                Bridget Sonia
+                            </h5>
+                                <h6>
+                                    bridget_sonia@gmail.com
+                                </h6>
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item">
                                     <a class="nav-link active" id="profile-tab"  href="#profile" role="tab" aria-controls="profile" aria-selected="true">Merchant Profile</a>
@@ -26,8 +26,8 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-md-2">
-                        <input type="submit" class="btn btn-primary float-right" name="btnAddMore" value="Edit Merchant Profile"/>
+                    <div class="col-md-2" v-if="isLoggedIn && isOwner">
+                        <router-link  to="/views/merchant-profile"><input type="submit" class="btn btn-primary float-right" name="btnAddMore" value="Edit Merchant Profile"/></router-link>
                     </div>
                 </div>
                 <div class="row">
@@ -133,15 +133,25 @@
     </div>
 </template>
 <<script>
+import { userProfile, editProfile,  } from '../services/MerchantProfile';
 export default {
-   data() {
-       return {
-           user: '',
-           authUser: ''
+   props: {
+       user: {
+           type: Object,
+           required: true
+       },
+       authUser: {
+           type: Object,
+           required: true
        }
-   },
-   beforeUpdate(to, from, next) {
-       
-   },
+    },
+    computed: {
+        isOwner() {
+            return this.user.id == this.authUser
+        },
+        isLoggedIn() {
+            return !!this.authUser
+        }
+    }
 }
 </script>

@@ -11,11 +11,16 @@ export async function editProfile(data){
 }
 
 
-export async function userProfile(){
+export async function userProfile(username){
     let result={};
-    const response=await axios.get(`${baseUrl}merchant/get-merchant-by-id-phone/:type/:value`)
-    console.log(response);
+    if(username) {
+        const response=await axios.get(`${baseUrl}merchant/get-merchant-profile`)
+    }else {
+        const response=await axios.get(`${baseUrl}merchant/get-merchant-profile`)
+    }
     return response.data;
+    
+   
 }
 
 export async function userState(data){

@@ -32,7 +32,7 @@ export default new Router({
 				path: "/merchant-profile",
 				name: "merchantprofile",
 				component: ()=> import("./views/MerchantProfile"),
-				//beforeEnter: ifAuthenticated,
+				//beforeEnter: true
 			},
 			{
 				path: "/merchant",

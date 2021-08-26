@@ -18,18 +18,12 @@
 <script>
 import HeaderComponent from '../components/HeaderComponent.vue';
 import SidebarComponent from "../components/SidebarComponent.vue"
+import { userProfile, editProfile } from '../services/MerchantProfile';
 
 
 export default 
  {
   components: { SidebarComponent, HeaderComponent }, 
-
-   created () {
-           tokne=localStorage.getItem('token')
-           if(!token){
-               this.$router.push({path:'/auth/login'});
-           }
-            this.fetchAuthenticatedUser()
-    },  
+  
 };
 </script>

@@ -26,22 +26,27 @@ axios.interceptors.request.use(
   }
 );
 
-router.beforeEach((to, from, next) => {
-  if (to.meta.disableIfLoggedIn) {
-    const authUser = localStorage.getItem('token')
-      if (authUser) {
-          next({name: 'index'});
-      } else {
-          next();
-      }
-  }
-  next();
-});
+// router.beforeEach((to, from, next) => {
+//   if (to.meta.disableIfLoggedIn) {
+//     const authUser = localStorage.getItem('token')
+//       if (authUser) {
+//           next({name: 'index'});
+//       } else {
+//           next();
+//       }
+//   }
+//   next();
+// });
 
 export default {
-  created() {
-    
-  },
+  //methods: {
+    //beforeRouteEnter (to, from, next) {
+      //const token = localStorage.getItem('token')
+
+      //return token ? next() : next('/auth/login')
+    //}
+
+  //}
 }
 
 Vue.use(VueAxios, axios, Vuelidate)
