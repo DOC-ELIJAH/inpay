@@ -18,18 +18,18 @@ export async function userProfile(){
     return response.data;
 }
 
-export async function userState(data){
-    let result={};
-    const response=await axios.get(`${baseUrl}account/get-states`, data)
-    return response.data;
-}
+//export async function userState(data){
+    //let result={};
+    //const response=await axios.get(`${baseUrl}account/get-states`, data)
+    //return response.data;
+//}
 
 
-export async function userBanks(data){
-    let result={};
-    const response=await axios.get(`${baseUrl}account/get-banks`, data)
-    return response.data;
-}
+//export async function userBanks(data){
+    //let result={};
+    //const response=await axios.get(`${baseUrl}account/get-banks`, data)
+    //return response.data;
+//}
 
 export default {
     created(){

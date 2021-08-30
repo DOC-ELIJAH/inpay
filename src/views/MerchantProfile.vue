@@ -146,12 +146,12 @@
                 branch:''
             }
         },
-        // beforeRouteEnter (to, from, next) {
-        //     const token = localStorage.getItem('token')
+         beforeRouteEnter (to, from, next) {
+            const token = localStorage.getItem('token')
 
-        //     return token ? next() : next('/auth/login')
-        // },
-       created () {
+            return token ? next() : next('/auth/login')
+        },
+       created(){
            this.getBaseData();
           this.fetchAuthenticatedUser();
         },
