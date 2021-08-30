@@ -25,6 +25,19 @@ axios.interceptors.request.use(
   }
 )
 
+axios.interceptors.response.use(
+  response=>{
+    
+    if(response.data.statusCode==900){
+      localStorage.removeItem("token")
+      localStorage.setItem("failedAuth", "You need to Login first");
+      router.push(path, "/auth/login");
+    }else{
+      return response;
+    }
+    
+  }
+)
 
 Vue.use(VueAxios, axios, Vuelidate, VueSweetalert2)
 

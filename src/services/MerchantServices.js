@@ -1,6 +1,6 @@
 import axios from "axios";
 import createAccount from './AccountServices';
-const baseUrl=window.location.protocol+"//"+window.location.hostname+':5000/v1/';
+const baseUrl=window.location.protocol+"//"+window.location.hostname+':5000/v1/secured/';
 
 
 export async function editProfile(data){
