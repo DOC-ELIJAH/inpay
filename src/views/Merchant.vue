@@ -1,140 +1,157 @@
 <<template>
     <div class="d-flex align-items-center justify-content-between m-b-30">
-        <div class="col-md-4 mb-3">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex flex-column align-items-center text-center">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
-                        <div class="mt-3">
-                            <p class="text-secondary mb-1">Email</p>
+        <form method="post">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-img">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt=""/>
+                            <div class="file btn btn-lg btn-primary">
+                                Change Photo
+                                <input type="file" name="file"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="profile-head">
+                            <h5>
+                                Bridget Sonia
+                            </h5>
+                                <h6>
+                                    bridget_sonia@gmail.com
+                                </h6>
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="profile-tab"  href="#profile" role="tab" aria-controls="profile" aria-selected="true">Merchant Profile</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-2" v-if="isLoggedIn && isOwner">
+                        <router-link  to="/views/merchant-profile"><input type="submit" class="btn btn-primary float-right" name="btnAddMore" value="Edit Merchant Profile"/></router-link>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        
+                    </div>
+                    <div class="col-md-8">
+                        <div class="tab-content profile-tab" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Business Name</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>Kshiti123</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Full Address</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>Kshiti Ghelani</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Date of Birth</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>kshitighelani@gmail.com</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>BVN Number</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>123 456 7890</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>NIN Number</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>Web Developer and Designer</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>State ID</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>123</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>City</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>Web Developer and Designer</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Account Name</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>Web Developer and Designer</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Bank ID</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>Web Developer and Designer</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Account Type</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>Web Developer and Designer</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Branch</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>Web Developer and Designer</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div> 
-        <div class="col-md-8">
-            <div class="card mb-3">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <h6 class="mb-0">Business Name</h6>
-                        </div>
-                        <div class="col-sm-9 text-secondary">
-                        Kenneth Valdez
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <h6 class="mb-0">Full Address</h6>
-                        </div>
-                        <div class="col-sm-9 text-secondary">
-                        fip@jukmuh.al
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <h6 class="mb-0">BVN Number</h6>
-                        </div>
-                        <div class="col-sm-9 text-secondary">
-                            (239) 816-9029
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <h6 class="mb-0">NIN Number</h6>
-                        </div>
-                        <div class="col-sm-9 text-secondary">
-                            (320) 380-4539
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <h6 class="mb-0">City</h6>
-                        </div>
-                        <div class="col-sm-9 text-secondary">
-                            Bay Area, San Francisco, CA
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <h6 class="mb-0">Language</h6>
-                        </div>
-                        <div class="col-sm-9 text-secondary">
-                            Bay Area, San Francisco, CA
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <h6 class="mb-0">Account Name</h6>
-                        </div>
-                        <div class="col-sm-9 text-secondary">
-                            Bay Area, San Francisco, CA
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <h6 class="mb-0">Bank ID</h6>
-                        </div>
-                        <div class="col-sm-9 text-secondary">
-                            Bay Area, San Francisco, CA
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <h6 class="mb-0">Account Type</h6>
-                        </div>
-                        <div class="col-sm-9 text-secondary">
-                            Bay Area, San Francisco, CA
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <h6 class="mb-0">Bank</h6>
-                        </div>
-                        <div class="col-sm-9 text-secondary">
-                            Bay Area, San Francisco, CA
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <a class="btn btn-info " target="__blank" href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Edit</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+            </form> 
     </div>
 </template>
 <<script>
+import { userProfile, editProfile,  } from '../services/MerchantProfile';
 export default {
-   //props: {
-            //user: {
-                //type: Object,
-                //required: true
-            //},
-            //authUser: {
-                //type: Object,
-                //required: true
-            //}
-    //},
-    //computed: {
-        //isOwner(){
-            //return this.user.id === this.authUser.id
-        //},
-        //isLoggedIn(){
-            //return this.authUser
-        //},
-
-    //}
+   props: {
+       user: {
+           type: Object,
+           required: true
+       },
+       authUser: {
+           type: Object,
+           required: true
+       }
+    },
+    computed: {
+        isOwner() {
+            return this.user.id == this.authUser
+        },
+        isLoggedIn() {
+            return !!this.authUser
+        }
+    }
 }
 </script>
