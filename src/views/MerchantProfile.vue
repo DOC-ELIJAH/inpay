@@ -28,7 +28,7 @@
                                 <label for="stateID">State ID <span class="required-feilds">*</span></label>
                                 <select class="form-control" v-model="state_id" id="stateID">
                                     <option value="">Select State</option>
-                                    <option v-for="state in states" value="state.id">{{state.state_name}}</option>
+                                    <option v-for="state in states" :value="state.id" >{{state.state}}</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-6">
@@ -68,9 +68,9 @@
                             </div>
                                 <div class="form-group col-md-6">
                                 <label for="bankID">Bank ID <span class="required-feilds">*</span></label>
-                                <select class="form-control" v-model="bank_id" id="stateID">
+                                <select class="form-control" v-model="bank_id" id="bandId">
                                     <option value="">Select Bank</option>
-                                    <option v-for="bank in banks" value="bank.id">{{bank.bank_name}}</option>
+                                    <option v-for="bank in banks" :value="bank.id">{{bank.bank_name}}</option>
                                 </select>
                             </div>
                         </div>
@@ -205,13 +205,17 @@
             getBaseData(){
                 getStates()
                 .then(res=>{
+                    if(res.statusCode==900){
+                        localStorage.removeItem("token")
+                        this.$router.push("/auth/login");
+                    }
                     this.states=res.message.data
                 }).catch(err=>{
                     
                 });
                 getBanks()
                 .then(res=>{
-                    this.banks=res
+                    this.banks=res.message.data
                 }).catch(err=>{
 
                 });

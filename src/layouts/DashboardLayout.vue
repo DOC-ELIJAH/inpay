@@ -40,6 +40,10 @@ export default
                     if(res.statusCode==400 && this.$route.path != '/merchant-profile'){
                         this.$router.push({path:'/merchant-profile'});
                     }
+
+                    if(res.statusCode==900){
+                        this.$rout
+                    }
                 }).catch(err=>{
                     console.log(err)
                 })

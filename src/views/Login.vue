@@ -90,9 +90,15 @@ export default {
 
   created(){
     const confirm=localStorage.getItem('confirmed')
+    const failedAuth=localStorage.getItem('failedAuth');
     if(confirm!=null){
       this.successMessage=confirm
       localStorage.removeItem('confirmed')
+    }
+
+    if(failedAuth){
+      this.errorMessage=failedAuth
+      localStorage.removeItem('failedAuth')
     }
   },
    data(){
@@ -125,6 +131,7 @@ export default {
               'username':this.phoneNumber,
               'password':this.password
             }
+            console.log(payload)
             this.loading = true;
             const result = userLogin(payload);
             result.then(res=>{
