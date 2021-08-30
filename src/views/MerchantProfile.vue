@@ -205,6 +205,10 @@
             getBaseData(){
                 getStates()
                 .then(res=>{
+                    if(res.statusCode==900){
+                        localStorage.removeItem("token")
+                        this.$router.push("/auth/login");
+                    }
                     this.states=res.message.data
                 }).catch(err=>{
                     
