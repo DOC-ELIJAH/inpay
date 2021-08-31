@@ -34,9 +34,9 @@ export default new Router({
 				component: ()=> import("./views/MerchantProfile"),
 			},
 			{
-				path: "/merchant",
-				name:"merchant",
-				component: ()=> import ("./views/MerchantProfile")
+				path: "/merchant-view",
+				name:"merchant-view",
+				component: ()=> import ("./views/MerchantView")
 			},
 		]
 	},

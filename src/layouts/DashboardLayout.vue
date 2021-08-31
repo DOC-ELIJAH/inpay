@@ -50,25 +50,7 @@ export default
         }
     }, 
     data: () => ({
-        user:{
-            merchant_id:"",
-            fullname:"Badmous Dembele",
-            business_name:"Badmous Dembele",
-            phone:"2341234578979",
-            email:"badmousdems@gmail.com",
-            date_of_birth:"2021-08-01",
-            full_address:"Harare street, zone 6 wuse Abuja",
-            state:"Cross River",
-            city:"Abuja",
-            language:"yoruba",
-            bvn_number:"1234566789456",
-            nin_number:"0857683726475"
-            },
-        bank_info:{
-            bank_name:"First City Monument Bank",
-            accont_name:"Ndaisah Umar Rabi",
-            account_type:"Savings"
-        }
+        user:""
     }),
 };
 </script>
