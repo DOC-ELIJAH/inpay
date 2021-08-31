@@ -149,7 +149,7 @@
         <br>
         <v-list-item class="active">
             <div>
-                <button @click="logout" type="submit" class="btn btn-primary"><a href="/auth/logout">Logout</a></button>
+                <button @click="logout" type="submit" class="btn btn-primary" style="padding:14px 40px"><a href="/auth/logout">Logout</a></button>
             </div>
         </v-list-item>
     </v-list>

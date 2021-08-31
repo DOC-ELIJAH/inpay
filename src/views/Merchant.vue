@@ -22,6 +22,7 @@ import { userProfile, editProfile,  } from '../services/MerchantProfile';
 import { createAccount } from '../services/AccountServices';
 
 export default {
+    name: 'Merchant',
     components: {
         MerchantHeader,
         MerchantBody

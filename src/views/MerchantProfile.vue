@@ -1,6 +1,5 @@
 <template>
     <div class="main-content">
-        <div class="card">
             <div class="card-body">
                 <div v-if="errorMessage" class="alert alert-danger">
                     <ul>
@@ -10,7 +9,7 @@
                     </ul>
                 </div>
                 <div v-if="successMessage" class="alert alert-success">{{this.successMessage}}</div>
-                <h4>Merchant Details</h4>
+                <h4 style="text-align:center;">Merchant Details</h4>
                 <div class="m-t-25">
                     <form @submit.prevent="merchantCreate">
                         <div class="form-row">
@@ -146,11 +145,11 @@
                 branch:''
             }
         },
-         beforeRouteEnter (to, from, next) {
-            const token = localStorage.getItem('token')
+        //beforeRouteEnter (to, from, next) {
+            //const token = localStorage.getItem('token')
 
-            return token ? next() : next('/auth/login')
-        },
+            //return token ? next() : next('/auth/login')
+        //},
        created(){
            this.getBaseData();
           this.fetchAuthenticatedUser();
@@ -175,31 +174,31 @@
             },
             merchantCreate(){
               
-                    let payload={
-                        business_name: this.business_name,
-                        full_address: this.full_address,
-                        bvn_number: this.bvn_number,
-                        nin_number: this.nin_number,
-                        city: this.city,
-                        language: this.language,
-                        date_of_birth: this.date_of_birth,
-                        account_name: this.account_name,
-                        bank_id: this.bank_id,
-                        account_type: this.account_type,
-                        branch: this.branch,
-                        state_id:this.state_id
-                    };
-                   // console.log(payload)
-                    // return;
-                    const result = editProfile(payload)
-                    .then(res=>{
-                        if(res.statusCode!=200){
-                            this.errorMessage=res.errors
-                        }else{
-                            this.successMessage="Profile updated successfully"
-                            this.$router.push({path:'/merchant'});
-                        }
-                    })
+                let payload={
+                    business_name: this.business_name,
+                    full_address: this.full_address,
+                    bvn_number: this.bvn_number,
+                    nin_number: this.nin_number,
+                    city: this.city,
+                    language: this.language,
+                    date_of_birth: this.date_of_birth,
+                    account_name: this.account_name,
+                    bank_id: this.bank_id,
+                    account_type: this.account_type,
+                    branch: this.branch,
+                    state_id:this.state_id
+                };
+                //console.log(payload)
+                // return;
+                const result = editProfile(payload)
+                .then(res=>{
+                    if(res.statusCode!=200){
+                        this.errorMessage=res.errors
+                    }else{
+                        this.successMessage="Profile updated successfully"
+                        this.$router.push({path:'/merchant'});
+                    }
+                })
             },
 
             getBaseData(){
@@ -222,9 +221,17 @@
             }
         },
     }
-    
-
 </script>
-
+<style>
+    .main-content{
+        margin: 0px;
+        padding: 0px;
+    }
+    .card-body{
+        padding: 0px;
+        margin: 0px;
+    }
     
+    
+</style>
     
