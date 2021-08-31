@@ -42,7 +42,7 @@
                                         <label>Business Name</label>
                                     </div>
                                     <div class="col-md-6">
-                                        <p>Kshiti123</p>
+                                        <p>{{user.business_name}}</p>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -135,16 +135,7 @@
 <<script>
 import { userProfile, editProfile,  } from '../services/MerchantProfile';
 export default {
-   props: {
-       user: {
-           type: Object,
-           required: true
-       },
-       authUser: {
-           type: Object,
-           required: true
-       }
-    },
+   props:['user'],
     computed: {
         isOwner() {
             return this.user.id == this.authUser

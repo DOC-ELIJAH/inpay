@@ -35,9 +35,9 @@ export default new Router({
 			},
 			{
 				path: "/merchant",
-				name:"/merchant",
+				name:"merchant",
 				component: ()=> import ("./views/MerchantProfile")
-			}
+			},
 		]
 	},
 	{	

@@ -29,7 +29,7 @@
                     <ul class="nav-right">
                          <li>
                             <h3 style="margin-top: 13px">
-                                <b>Merchant ID:</b> 22093
+                                <b>Merchant ID:</b> {{user.merchant_id}}
                             </h3>
                         </li>
                         
@@ -87,8 +87,10 @@
 
 <script>
 module.exports = {
-        data(){
-            return {}
-        }
+    props:['user'],
+    created() {
+        //console.log(this.userDetails)
+    },
+  
     }
 </script>
