@@ -22,7 +22,9 @@ import { userProfile, editProfile,  } from '../services/MerchantProfile';
 import { createAccount } from '../services/AccountServices';
 
 export default {
-    name: 'Merchant',
+<<<<<<< HEAD
+   props:['user'],
+=======
     components: {
         MerchantHeader,
         MerchantBody
@@ -33,6 +35,7 @@ export default {
             authUser: ''
         }
     },
+>>>>>>> 18be20710228ccc87a6f6859ea82c6b2394c9d64
     computed: {
         isLoggedIn() {
             return !!authUser

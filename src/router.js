@@ -2,7 +2,6 @@ import Vue from "vue";
 import Router from 'vue-router';
 import Dashboard from './views/Dashboard.vue'
 import Withdrawal from './views/Withdrawal.vue'
-import Merchant from './views/Merchant.vue'
 Vue.use(Router);
 
 
@@ -36,10 +35,9 @@ export default new Router({
 			},
 			{
 				path: "/merchant",
-				name: "merchant",
-				component: ()=>import("./views/MerchantProfile"),
-				
-			}
+				name:"merchant",
+				component: ()=> import ("./views/MerchantProfile")
+			},
 		]
 	},
 	{	

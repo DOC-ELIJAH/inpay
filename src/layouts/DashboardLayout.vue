@@ -1,13 +1,13 @@
 <template>
     <div class="app">
         <div class="layout">          
-           <header-component/>
+           <header-component :user="user"/>
            <sidebar-component />
             <div class="page-container">
                 
                 <!-- Content Wrapper START -->
                 <div class="main-content">
-                  <router-view></router-view>
+                  <router-view :user="user"></router-view>
                 </div>
                 <!-- Content Wrapper END -->
             </div>
@@ -35,21 +35,40 @@ export default
             if(!token){
                 this.$router.push({path:'/auth/login'});
             }else{
-                userProfile()
-                .then(res=>{
-                    if(res.statusCode==400 && this.$route.path != '/merchant-profile'){
+               const result = userProfile()
+                result.then(response=>{
+                    if(response.statusCode==400 && this.$route.path != '/merchant-profile'){
                         this.$router.push({path:'/merchant-profile'});
                     }
-
-                    if(res.statusCode==900){
-                        this.$rout
+                    if(response.statusCode==200){
+                        this.user=response.message[0].merchant_info
                     }
                 }).catch(err=>{
                     console.log(err)
                 })
             }
         }
-        
-    },  
+    }, 
+    data: () => ({
+        user:{
+            merchant_id:"",
+            fullname:"Badmous Dembele",
+            business_name:"Badmous Dembele",
+            phone:"2341234578979",
+            email:"badmousdems@gmail.com",
+            date_of_birth:"2021-08-01",
+            full_address:"Harare street, zone 6 wuse Abuja",
+            state:"Cross River",
+            city:"Abuja",
+            language:"yoruba",
+            bvn_number:"1234566789456",
+            nin_number:"0857683726475"
+            },
+        bank_info:{
+            bank_name:"First City Monument Bank",
+            accont_name:"Ndaisah Umar Rabi",
+            account_type:"Savings"
+        }
+    }),
 };
 </script>

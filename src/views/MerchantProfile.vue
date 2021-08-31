@@ -98,6 +98,7 @@
     import { userProfile, editProfile } from '../services/MerchantServices.js';
     import { getBanks, getStates } from '../services/BaseServices.js';
     export default {
+        props:['user'],
         mixins: [validationMixin],
         validations: {
             business_name: {
@@ -152,26 +153,39 @@
         //},
        created(){
            this.getBaseData();
-          this.fetchAuthenticatedUser();
+           console.log(this.user)
+            this.business_name = this.user.business_name
+            this.full_address = this.user.full_address
+            this.date_of_birth = this.user.date_of_birth
+            this.state_id = this.user.state_id
+            this.city = this.user.city
+            this.language = this.user.language
+            this.bvn_number = this.user.bvn_number
+            this.nin_number = this.user.nin_number
+            this.account_name = this.user.account_name
+            this.bank_id = this.user.bank_id
+            this.account_type = this.user.account_type
+            this.branch = this.user.branch
+          //this.fetchAuthenticatedUser();
         },
         methods: {
-            fetchAuthenticatedUser(){
-                userProfile()
-                .then(response=>{
-                    this.business_name = response.data.data.business_name
-                    this.full_address = response.data.data.full_address
-                    this.date_of_birth = response.data.data.date_of_birth
-                    this.state_id = response.data.data.state_id
-                    this.city = response.data.data.city
-                    this.language = response.data.data.language
-                    this.bvn_number = response.data.data.bvn_number
-                    this.nin_number = response.data.data.nin_number
-                    this.account_name = response.data.data.account_name
-                    this.bank_id = response.data.data.bank_id
-                    this.account_type = response.data.data.account_type
-                    this.branch = response.data.data.branch
-                })
-            },
+            // fetchAuthenticatedUser(){
+            //     userProfile()
+            //     .then(response=>{
+            //         this.business_name = response.message[0].merchant_info.business_name
+            //         this.full_address = response.message[0].merchant_info.full_address
+            //         this.date_of_birth = response.message[0].merchant_info.date_of_birth
+            //         this.state_id = response.message[0].merchant_info.state_id
+            //         this.city = response.message[0].merchant_info.city
+            //         this.language = response.message[0].merchant_info.language
+            //         this.bvn_number = response.message[0].merchant_info.bvn_number
+            //         this.nin_number = response.message[0].merchant_info.nin_number
+            //         this.account_name = response.message[0].merchant_info.account_name
+            //         this.bank_id = response.message[0].merchant_info.bank_id
+            //         this.account_type = response.message[0].merchant_info.account_type
+            //         this.branch = response.message[0].merchant_info.branch
+            //     })
+            // },
             merchantCreate(){
               
                 let payload={
