@@ -32,13 +32,12 @@ export default new Router({
 				path: "/merchant-profile",
 				name: "merchantprofile",
 				component: ()=> import("./views/MerchantProfile"),
-				//beforeEnter: ifAuthenticated,
 			},
 			{
-				path: "/merchant",
-				name:"/merchant",
-				component: ()=> import ("./views/Merchant")
-			}
+				path: "/merchant-view",
+				name:"merchant-view",
+				component: ()=> import ("./views/MerchantView")
+			},
 		]
 	},
 	{	

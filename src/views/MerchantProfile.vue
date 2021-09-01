@@ -1,6 +1,5 @@
 <template>
     <div class="main-content">
-        <div class="card">
             <div class="card-body">
                 <div v-if="errorMessage" class="alert alert-danger">
                     <ul>
@@ -16,17 +15,20 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="businessName">Business Name <span class="required-feilds">*</span></label>
-                                <input type="text" class="form-control" v-model="business_name" id="businessName" placeholder="Business Name">
+                                <input type="text" class="form-control" v-model="business_name" id="businessName" placeholder="Business Name" required>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="fullAddress">Full Address <span class="required-feilds">*</span></label>
-                                <input type="text" class="form-control" v-model="full_address" id="fullAddress" placeholder="Full Address">
+                                <input type="text" class="form-control" v-model="full_address" id="fullAddress" placeholder="Full Address" required>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="stateID">State ID <span class="required-feilds">*</span></label>
-                                <input type="number" class="form-control" v-model="state_id" id="stateID" placeholder="State ID">
+                                <label for="stateID">State <span class="required-feilds">*</span></label>
+                                <select class="form-control" v-model="state_id" id="stateID" required>
+                                    <option value="">Select State</option>
+                                    <option v-for="state in states" :value="state.id" >{{state.state}}</option>
+                                </select>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="city">City</label>
@@ -36,27 +38,27 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="language">Language</label>
-                                <input v-model="language" id="language">
-                                <select class="custom-select" style="min-width: 180px;" required>
+                                <select v-model="language" id="language" class="custom-select" style="min-width: 180px;">
                                     <option selected>Select Language</option>
-                                    <option value="yoruba">Yoruba</option>
-                                    <option value="igbo">Igbo</option>
-                                    <option value="hausa">Hausa</option>
+                                    <option value="Yoruba">Yoruba</option>
+                                    <option value="Igbo">Igbo</option>
+                                    <option value="Hausa">Hausa</option>
+                                    <option value="Others">Others</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="dateOfBirth">Date of Birth</label>
-                                <input type="date" class="form-control" v-model="date_of_birth" id="date" placeholder="Date of Birth">
+                                <label for="dateOfBirth">Date of Birth <span class="required-feilds">*</span></label>
+                                <input type="date" class="form-control" v-model="date_of_birth" id="date" placeholder="Date of Birth" required>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="bvnNumber">Bvn Number <span class="required-feilds">*</span></label>
-                                <input type="text" class="form-control" v-model="bvn_number" id="bvnNumber" placeholder="BVN Number">
+                                <label for="bvnNumber">Bank Verification Number (BVN) <span class="required-feilds">*</span></label>
+                                <input type="text" class="form-control" v-model="bvn_number" id="bvnNumber" placeholder="BVN Number" minlength="11" maxlength="11">
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="ninNumber">Nin Number<span class="required-feilds">*</span></label>
-                                <input type="text" class="form-control" v-model="nin_number" id="ninNumber" placeholder="Nin Number">
+                                <label for="ninNumber">National Identification Number (NIN) <span class="required-feilds">*</span></label>
+                                <input type="text" class="form-control" v-model="nin_number" id="ninNumber" placeholder="NIN Number" minlength="11" maxlength="11">
                             </div>
                         </div>
                         <div class="form-row">
@@ -65,8 +67,11 @@
                                 <input type="text" class="form-control" v-model="account_name" id="accountName" name="accountName" placeholder="Account Name">
                             </div>
                                 <div class="form-group col-md-6">
-                                <label for="bankID">Bank ID <span class="required-feilds">*</span></label>
-                                <input type="number" class="form-control" v-model="bank_id" id="bankID" name="bankID" placeholder="Bank ID">
+                                <label for="bankID">Bank<span class="required-feilds">*</span></label>
+                                <select class="form-control" v-model="bank_id" id="bandId" required>
+                                    <option value="">Select Bank</option>
+                                    <option v-for="bank in banks" :value="bank.id">{{bank.bank_name}}</option>
+                                </select>
                             </div>
                         </div>
 
@@ -91,9 +96,10 @@
     import { validationMixin } from 'vuelidate';
     import { required } from 'vuelidate/lib/validators';
     import axios from 'axios';
-    import { userProfile, editProfile } from '../services/MerchantProfile';
-
+    import { userProfile, editProfile } from '../services/MerchantServices.js';
+    import { getBanks, getStates } from '../services/BaseServices.js';
     export default {
+        props:['user'],
         mixins: [validationMixin],
         validations: {
             business_name: {
@@ -123,6 +129,8 @@
         },
         data(){
             return {
+                states:'',
+                banks:'',
                 successMessage:'',
                 errorMessage:'',
                 business_name:'',
@@ -131,11 +139,7 @@
                 bvn_number:'',
                 nin_number:'',
                 city:'',
-                language:{
-                    Yoruba:'',
-                    Igbo:'',
-                    Hausa:''
-                },
+                language:'',
                 date_of_birth:'',
                 account_name:'',
                 bank_id:'',
@@ -143,35 +147,49 @@
                 branch:''
             }
         },
-        beforeRouteEnter (to, from, next) {
-            const token = localStorage.getItem('token')
+        //beforeRouteEnter (to, from, next) {
+            //const token = localStorage.getItem('token')
 
-            return token ? next() : next('/auth/login')
-        },
-       created () {
-          
+            //return token ? next() : next('/auth/login')
+        //},
+       created(){
+           this.getBaseData();
+           console.log(this.user)
+            this.business_name = this.user.business_name
+            this.full_address = this.user.full_address
+            this.date_of_birth = this.user.date_of_birth
+            this.state_id = this.user.state_id
+            this.city = this.user.city
+            this.language = this.user.language
+            this.bvn_number = this.user.bvn_number
+            this.nin_number = this.user.nin_number
+            this.account_name = this.user.account_name
+            this.bank_id = this.user.bank_id
+            this.account_type = this.user.account_type
+            this.branch = this.user.branch
+          //this.fetchAuthenticatedUser();
         },
         methods: {
-            fetchAuthenticatedUser(){
-                const token = localStorage.getItem('user-token')
-                userProfile()
-                .then(response=>{
-                    this.business_name = response.data.data.business_name
-                    this.full_address = response.data.data.full_address
-                    this.date_of_birth = response.data.data.date_of_birth
-                    this.state_id = response.data.data.state_id
-                    this.city = response.data.data.city
-                    this.language = response.data.data.language
-                    this.bvn_number = response.data.data.bvn_number
-                    this.nin_number = response.data.data.nin_number
-                    this.account_name = response.data.data.account_name
-                    this.bank_id = response.data.data.bank_id
-                    this.account_type = response.data.data.account_type
-                    this.branch = response.data.data.branch
-                })
-            },
+            // fetchAuthenticatedUser(){
+            //     userProfile()
+            //     .then(response=>{
+            //         this.business_name = response.message[0].merchant_info.business_name
+            //         this.full_address = response.message[0].merchant_info.full_address
+            //         this.date_of_birth = response.message[0].merchant_info.date_of_birth
+            //         this.state_id = response.message[0].merchant_info.state_id
+            //         this.city = response.message[0].merchant_info.city
+            //         this.language = response.message[0].merchant_info.language
+            //         this.bvn_number = response.message[0].merchant_info.bvn_number
+            //         this.nin_number = response.message[0].merchant_info.nin_number
+            //         this.account_name = response.message[0].merchant_info.account_name
+            //         this.bank_id = response.message[0].merchant_info.bank_id
+            //         this.account_type = response.message[0].merchant_info.account_type
+            //         this.branch = response.message[0].merchant_info.branch
+            //     })
+            // },
             merchantCreate(){
-                const result = editProfile({
+              
+                let payload={
                     business_name: this.business_name,
                     full_address: this.full_address,
                     bvn_number: this.bvn_number,
@@ -182,25 +200,53 @@
                     account_name: this.account_name,
                     bank_id: this.bank_id,
                     account_type: this.account_type,
-                    branch: this.branch
-                })
+                    branch: this.branch,
+                    state_id:this.state_id
+                };
+                //console.log(payload)
+                // return;
+                const result = editProfile(payload)
                 .then(res=>{
                     if(res.statusCode!=200){
                         this.errorMessage=res.errors
                     }else{
                         this.successMessage="Profile updated successfully"
-                        console.log(res)
                         this.$router.push({path:'/merchant'});
                     }
                 })
-                
-                
+            },
+
+            getBaseData(){
+                getStates()
+                .then(res=>{
+                    if(res.statusCode==900){
+                        localStorage.removeItem("token")
+                        this.$router.push("/auth/login");
+                    }
+                    this.states=res.message.data
+                }).catch(err=>{
+                    
+                });
+                getBanks()
+                .then(res=>{
+                    this.banks=res.message.data
+                }).catch(err=>{
+
+                });
             }
         },
     }
-    
-
 </script>
-
+<style>
+    .main-content{
+        margin: 0px;
+        padding: 0px;
+    }
+    .card-body{
+        padding: 0px;
+        margin: 0px;
+    }
     
+    
+</style>
     

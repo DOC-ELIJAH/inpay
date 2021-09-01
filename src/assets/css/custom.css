@@ -25,3 +25,8 @@
 	font-size: 12px !important;
 	padding-left: 14px !important;
 }
+.invalid{
+	font-size: 12px !important;
+	color:#a20b0b;
+	font-weight: bolder;
+}

@@ -7,39 +7,39 @@ import '@/assets/css/custom.css'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import Vuelidate from 'vuelidate';
+import VueSweetalert2 from 'vue-sweetalert2';
 
 
 Vue.config.productionTip = false
 axios.interceptors.request.use(
   request=>{
-    request.headers.ContertType='application/json';
+    request.headers.ContentType='application/json';
     request.headers.Accept='application/json';
-    request.headers.Authorization='Bearer '+localStorage.getItem('token')
-    if(request.url.includes('api')){
+    if(request.url.includes('secured')){
       request.headers.Authorization='Bearer '+localStorage.getItem('token')
     }
-    console.log(request)
     return request;
   },
   error=>{
     return Promise.reject(error)
   }
-);
+)
 
-router.beforeEach((to, from, next) => {
-  if (to.meta.disableIfLoggedIn) {
-    const authUser = localStorage.getItem('token')
-      if (authUser) {
-          next({name: 'index'});
-      } else {
-          next();
-      }
+axios.interceptors.response.use(
+  response=>{
+    
+    if(response.data.statusCode==900){
+      localStorage.removeItem("token")
+      localStorage.setItem("failedAuth", "You need to login before you can proceed.");
+      router.push(path, "/auth/login");
+    }else{
+      return response;
+    }
+    
   }
-  next();
-});
+)
 
-
-Vue.use(VueAxios, axios, Vuelidate)
+Vue.use(VueAxios, axios, Vuelidate, VueSweetalert2)
 
 new Vue({
   vuetify,

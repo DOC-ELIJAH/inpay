@@ -146,13 +146,27 @@
 
             <v-list-item-title>Withdraw</v-list-item-title>
         </v-list-item>
+        <br>
+        <v-list-item class="active">
+            <div>
+                <button @click="logout" type="submit" class="btn btn-primary btnLogout"><a href="/auth/logout">Logout</a></button>
+            </div>
+        </v-list-item>
     </v-list>
             </ul>
         </div>
-
+    
 
     </div>
 </template>
+
+
+<style scoped>
+.btnLogout {
+  padding:14px 40px;
+  color: #ccc !important
+}
+</style>
 
 
 <script>
@@ -184,6 +198,13 @@ module.exports = {
       ]
     }),
 
-    }
+    methods: {
+        logout(){
+            localStorage.removeItem('token');
+            this.$router.push(path, '/auth/login');
+        }
+    },
+
+}
 </script>
 

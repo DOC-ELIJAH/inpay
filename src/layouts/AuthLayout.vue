@@ -44,6 +44,12 @@
 
 <script>
  module.exports = {
+        // created(){
+        //      let token=localStorage.getItem('token');
+        //     if(token){
+        //         this.$router.push({path:'/dashboard'});
+        //     }
+        // },
         data(){
           return {
             // name: 'Sign Up'
