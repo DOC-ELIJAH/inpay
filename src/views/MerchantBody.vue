@@ -1,4 +1,4 @@
-<<template>
+<template>
     <div class="row">
         <div class="col-md-8">
             <div class="tab-content profile-tab" id="myTabContent">
@@ -97,13 +97,8 @@
     </div>
 </template>
 
-<<script>
+<script>
 export default {
-    props: {
-        user: {
-            type: Object,
-            required: true
-        }
-    }
+    
 }
 </script>

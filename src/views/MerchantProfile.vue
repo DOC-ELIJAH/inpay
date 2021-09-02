@@ -84,7 +84,7 @@
                                 <input type="text" class="form-control" v-model="branch" id="branch" placeholder="Branch">
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary float-right">Update Merchant Profile</button>
+                        <button type="submit" class="btn btn-primary float-right btn-profile">Update Merchant Profile</button>
                     </form>
                 </div>
             </div>
@@ -128,21 +128,21 @@
         },
         data(){
             return {
-                states:'',
+                states:"",
                 banks:'',
                 successMessage:'',
                 errorMessage:'',
-                business_name:'',
-                full_address:'',
+                business_name:this.user.business_name,
+                full_address:this.user.full_address,
                 state_id:'',
-                bvn_number:'',
-                nin_number:'',
-                city:'',
-                language:'',
-                date_of_birth:'',
-                account_name:'',
+                bvn_number:this.user.bvn_number,
+                nin_number:this.user.nin_number,
+                city:this.user.city,
+                language:this.user.language,
+                date_of_birth:this.user.date_of_birth,
+                account_name:this.user.accont_name,
                 bank_id:'',
-                account_type:'',
+                account_type:this.user.account_type,
                 branch:''
             }
         },
@@ -151,43 +151,41 @@
 
             //return token ? next() : next('/auth/login')
         //},
+        computed:{
+            businessNameComputed(){
+                return this.business_name
+            },
+            fullAddress(){
+                return this.full_address
+            },
+            ninNumber(){
+                return this.nin_number
+            }
+        },
        created(){
-           this.getBaseData();
-           console.log(this.user)
-            this.business_name = this.user.business_name
-            this.full_address = this.user.full_address
-            this.date_of_birth = this.user.date_of_birth
-            this.state_id = this.user.state_id
-            this.city = this.user.city
-            this.language = this.user.language
-            this.bvn_number = this.user.bvn_number
-            this.nin_number = this.user.nin_number
-            this.account_name = this.user.account_name
-            this.bank_id = this.user.bank_id
-            this.account_type = this.user.account_type
-            this.branch = this.user.branch
-          //this.fetchAuthenticatedUser();
+           userProfile()
+           .then(res=>{
+               if(res.statusCode!=200) return;
+               this.business_name=res.message[0].merchant_info.business_name
+                this.full_address=res.message[0].merchant_info.full_address
+                this.date_of_birth=res.message[0].merchant_info.date_of_birth
+                this.city=res.message[0].merchant_info.city
+                this.language=res.message[0].merchant_info.language
+                this.email=res.message[0].merchant_info.email
+                this.phone=res.message[0].merchant_info.phone
+                this.merchant_id=res.message[0].merchant_info.merchant_id
+                this.nin_number=res.message[0].merchant_info.nin_number
+                this.bvn_number=response.message[0].merchant_info.bvn_number
+                this.fullname=response.message[0].merchant_info.fullname
+           })
+          this.getBaseData()
         },
         methods: {
-            // fetchAuthenticatedUser(){
-            //     userProfile()
-            //     .then(response=>{
-            //         this.business_name = response.message[0].merchant_info.business_name
-            //         this.full_address = response.message[0].merchant_info.full_address
-            //         this.date_of_birth = response.message[0].merchant_info.date_of_birth
-            //         this.state_id = response.message[0].merchant_info.state_id
-            //         this.city = response.message[0].merchant_info.city
-            //         this.language = response.message[0].merchant_info.language
-            //         this.bvn_number = response.message[0].merchant_info.bvn_number
-            //         this.nin_number = response.message[0].merchant_info.nin_number
-            //         this.account_name = response.message[0].merchant_info.account_name
-            //         this.bank_id = response.message[0].merchant_info.bank_id
-            //         this.account_type = response.message[0].merchant_info.account_type
-            //         this.branch = response.message[0].merchant_info.branch
-            //     })
-            // },
             merchantCreate(){
-              
+                let btn=document.querySelector(".btn-profile");
+                btn.innerHTML='<div class="spinner-border text-info"></div>'
+                btn.setAttribute("disabled", true)
+
                 let payload={
                     business_name: this.business_name,
                     full_address: this.full_address,
@@ -206,13 +204,15 @@
                 // return;
                 const result = editProfile(payload)
                 .then(res=>{
-                    if(res.statusCode!=200){
+                    if(res.statusCode!=201){
                         this.errorMessage=res.errors
                     }else{
                         this.successMessage="Profile updated successfully"
                         this.$router.push({path:'/merchant'});
                     }
                 })
+                btn.innerHTML='Update Merchant Profile'
+                btn.removeAttribute("disabled", null)
             },
 
             getBaseData(){

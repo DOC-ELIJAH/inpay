@@ -1,4 +1,4 @@
-<<template>
+<template>
     <div class="row">
         <div class="col-md-4">
             <div class="profile-img">
@@ -33,25 +33,8 @@
         </div>
     </div>
 </template>
-<<script>
-export default {
-    props: {
-        user: {
-            type: Object,
-            required: true
-        },
-       authUser: {
-             type: Object,
-            required: true
-        }
-    },
-    computed: {
-        isOwner() {
-            return this.user.id == this.authUser.id
-        },
-        isLoggedIn() {
-            return !!this.authUser
-        }
-    }
+<script>
+module.exports ={
+    props:['user']
 }
 </script>

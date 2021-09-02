@@ -89,7 +89,6 @@
 module.exports = {
     props:['user'],
     created() {
-        //console.log(this.userDetails)
     },
   
     }
