@@ -1,12 +1,13 @@
 <template>    
-        <div>
-          <div v-if="errorMessage" class="alert alert-danger">
-            <p>{{errorMessage}}</p>
-          </div>
+        <div class="container">
+            <div v-if="errorMessage" class="alert alert-danger">
+              <p>{{errorMessage}}</p>
+            </div>
+            
+            <div v-if="successMessage" class="alert alert-info">
+                  {{successMessage}}
+            </div>
           
-           <div v-if="successMessage" class="alert alert-info">
-                {{successMessage}}
-          </div>
         <a href="javascript:void(0)" class="float-right" @click="changeInput" >Login with {{inputType === 'email' ? 'Phone': 'Email'}}</a>
         <br>
         <hr>
