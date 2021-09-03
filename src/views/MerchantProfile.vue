@@ -10,8 +10,8 @@
                 </div>
                 <div v-if="successMessage" class="alert alert-success">{{this.successMessage}}</div>
                 <h4 style="text-align:center;">Merchant Details</h4>
-                <div class="m-t-25">
-                    <form @submit.prevent="merchantCreate">
+                <div class="mb-3">
+                    <form @submit.prevent="merchantCreate" >
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="businessName">Business Name <span class="required-feilds">*</span></label>
@@ -86,6 +86,7 @@
                         </div>
                         <button type="submit" class="btn btn-primary float-right btn-profile">Update Merchant Profile</button>
                     </form>
+                    
                 </div>
             </div>
         </div>

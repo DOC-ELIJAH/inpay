@@ -19,6 +19,7 @@
 import HeaderComponent from '../components/HeaderComponent.vue';
 import SidebarComponent from "../components/SidebarComponent.vue"
 import { userProfile } from '../services/MerchantServices.js';
+import { createAccount } from '../services/AccountServices.js';
 
 
 export default 
@@ -26,7 +27,7 @@ export default
   components: { SidebarComponent, HeaderComponent }, 
 
     created () {
-         this.fetchAuthenticatedUser();
+        this.fetchAuthenticatedUser()
     },
 
     methods: {
@@ -48,16 +49,17 @@ export default
                         this.user.language=response.message[0].merchant_info.language
                         this.user.email=response.message[0].merchant_info.email
                         this.user.phone=response.message[0].merchant_info.phone
+                        this.user.account_name=response.message[0].merchant_info.account_name
+                        this.user.account_type=response.message[0].merchant_info.account_type
+                        this.user.branch=response.message[0].merchant_info.branch
                         this.user.merchant_id=response.message[0].merchant_info.merchant_id
                         this.user.nin_number=response.message[0].merchant_info.nin_number
                         this.user.bvn_number=response.message[0].merchant_info.bvn_number
                         this.user.fullname=response.message[0].merchant_info.fullname
                     }
                 }).catch(err=>{
-                   // console.log(err)
                 })
             }
-           // console.log(this.user)
         }
     }, 
     data: () => ({
