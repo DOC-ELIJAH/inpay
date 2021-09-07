@@ -46,15 +46,18 @@ export default
                         this.user.full_address=response.message[0].merchant_info.full_address
                         this.user.date_of_birth=response.message[0].merchant_info.date_of_birth
                         this.user.city=response.message[0].merchant_info.city
+                        this.user.nin_number=response.message[0].merchant_info.nin_number
+                        this.user.bvn_number=response.message[0].merchant_info.bvn_number
+                        this.user.bank_name=response.message[0].bank_info.bank_name
+                        this.user.account_type=response.message[0].bank_info.account_type
+                        this.user.account_name=response.message[0].merchant_info.fullname
+                        this.user.account_number=response.message[0].bank_info.account_number
+                        this.user.state=response.message[0].merchant_info.state
+                        this.user.branch=response.message[0].merchant_info.branch
                         this.user.language=response.message[0].merchant_info.language
                         this.user.email=response.message[0].merchant_info.email
                         this.user.phone=response.message[0].merchant_info.phone
-                        this.user.account_name=response.message[0].merchant_info.account_name
-                        this.user.account_type=response.message[0].merchant_info.account_type
-                        this.user.branch=response.message[0].merchant_info.branch
                         this.user.merchant_id=response.message[0].merchant_info.merchant_id
-                        this.user.nin_number=response.message[0].merchant_info.nin_number
-                        this.user.bvn_number=response.message[0].merchant_info.bvn_number
                         this.user.fullname=response.message[0].merchant_info.fullname
                     }
                 }).catch(err=>{
@@ -68,13 +71,20 @@ export default
             full_address:"",
             date_of_birth:"",
             city:"",
-            language:"",
-            bvn_number:"",
+            state:"",
             nin_number:"",
+            bvn_number:"",
+            bank_name:"",
+            language:"",
+            account_number:"",
+            account_type:"",
+            account_name:"",
+            branch:"",
             merchant_id:"",
             fullname:"",
             email:"",
             phone:"",
+            
         }
     }),
 };

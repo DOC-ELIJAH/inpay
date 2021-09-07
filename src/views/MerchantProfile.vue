@@ -24,10 +24,10 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="stateID">State ID <span class="required-feilds">*</span></label>
-                                <select class="form-control" v-model="state_id" id="stateID">
+                                <label for="stateID">State<span class="required-feilds">*</span></label>
+                                <select class="form-control" v-model="state" id="state">
                                     <option value="">Select State</option>
-                                    <option v-for="state in states" :value="state.id" >{{state.state}}</option>
+                                    <option v-for="state in states" :value="state" >{{state.state}}</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-6">
@@ -62,24 +62,30 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="accountName">Account Name<span class="required-feilds">*</span></label>
-                                <input type="text" class="form-control" v-model="account_name" id="accountName" name="accountName" placeholder="Account Name">
+                                <label for="bankName">Bank Name<span class="required-feilds">*</span></label>
+                                <select class="form-control" v-model="bank_name" id="bank_name">
+                                    <option value="">Select Bank</option>
+                                    <option v-for="bank in banks" :value="bank.name">{{bank.bank_name}}</option>
+                                </select>
                             </div>
                                 <div class="form-group col-md-6">
-                                <label for="bankID">Bank ID <span class="required-feilds">*</span></label>
-                                <select class="form-control" v-model="bank_id" id="bandId">
-                                    <option value="">Select Bank</option>
-                                    <option v-for="bank in banks" :value="bank.id">{{bank.bank_name}}</option>
-                                </select>
+                                <label for="accountName">Account Name<span class="required-feilds">*</span></label>
+                                <input type="text" class="form-control" v-model="account_name" id="accountName" name="accountName" placeholder="Account Name">
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="accountType">Account Type</label>
-                                <input type="text" class="form-control" v-model="account_type" id="accountType" name="accountType">
+                                <label for="accountNumber">Account Number</label>
+                                <input type="text" class="form-control" v-model="account_number" id="accountNumber" name="accountNumber" placeholder="Account Number">
                             </div>
                                 <div class="form-group col-md-6">
+                                <label for="accountType">Account Type</label>
+                                <input type="text" class="form-control" v-model="account_type" id="accountType" name="accountType" placeholder="Account Type">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
                                 <label for="branch">Branch </label>
                                 <input type="text" class="form-control" v-model="branch" id="branch" placeholder="Branch">
                             </div>
@@ -123,7 +129,7 @@
             account_name: {
                 required
             },
-            bank_id: {
+            bank_name: {
                 required
             }
         },
@@ -135,16 +141,17 @@
                 errorMessage:'',
                 business_name:this.user.business_name,
                 full_address:this.user.full_address,
-                state_id:'',
+                state:this.user.state,
                 bvn_number:this.user.bvn_number,
                 nin_number:this.user.nin_number,
+                account_number:this.user.account_number,
                 city:this.user.city,
                 language:this.user.language,
                 date_of_birth:this.user.date_of_birth,
-                account_name:this.user.accont_name,
-                bank_id:'',
+                account_name:this.user.account_name,
+                bank_name:this.bank_name,
                 account_type:this.user.account_type,
-                branch:''
+                branch:this.user.branch
             }
         },
         //beforeRouteEnter (to, from, next) {
@@ -174,10 +181,16 @@
                 this.language=res.message[0].merchant_info.language
                 this.email=res.message[0].merchant_info.email
                 this.phone=res.message[0].merchant_info.phone
+                this.bank_name=response.message[0].bank_info.bank_name
                 this.merchant_id=res.message[0].merchant_info.merchant_id
                 this.nin_number=res.message[0].merchant_info.nin_number
+                this.account_number=res.message[0].merchant_info.account_number
+                this.state=res.message[0].merchant_info.state
                 this.bvn_number=response.message[0].merchant_info.bvn_number
                 this.fullname=response.message[0].merchant_info.fullname
+                this.account_type=response.message[0].bank_info.account_type
+                this.account_name=response.message[0].bank_info.account_name
+                this.branch=response.message[0].bank_info.branch
            })
           this.getBaseData()
         },
@@ -196,6 +209,7 @@
                     language: this.language,
                     date_of_birth: this.date_of_birth,
                     account_name: this.account_name,
+                    account_number: this.account_number,
                     bank_id: this.bank_id,
                     account_type: this.account_type,
                     branch: this.branch,

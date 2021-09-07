@@ -1,4 +1,13 @@
 <template>
+    
+</template>
+
+<script>
+export default {
+    
+}
+</script>
+<template>
     <div class="row">
         <div class="col-md-8">
             <div class="tab-content profile-tab" id="myTabContent">
@@ -96,9 +105,3 @@
         </div>
     </div>
 </template>
-
-<script>
-export default {
-    
-}
-</script>

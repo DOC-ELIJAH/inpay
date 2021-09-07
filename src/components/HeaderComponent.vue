@@ -29,7 +29,7 @@
                     <ul class="nav-right">
                          <li>
                             <h3 style="margin-top: 13px">
-                                <b>Merchant ID:</b> {{user.merchant_id}}
+                                <router-link to="/merchant-profile"><b>Merchant ID:</b> {{user.merchant_id}}</router-link>
                             </h3>
                         </li>
                         
