@@ -193,7 +193,7 @@ module.exports = {
     methods: {
         logout(){
             localStorage.removeItem('token');
-            this.$router.push(path, '/auth/login');
+            this.$router.push({path: '/auth/login'});
         }
     },
 

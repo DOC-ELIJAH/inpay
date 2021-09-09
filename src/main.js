@@ -28,7 +28,7 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   response=>{
     
-    if(response.statusCode==900){
+    if(response.dada.statusCode==900){
       localStorage.removeItem("token")
       localStorage.setItem("failedAuth", "You need to Login first");
       router.push(path, "/auth/login");
