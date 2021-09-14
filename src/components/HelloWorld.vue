@@ -20,10 +20,8 @@
           <br>please join our online
           <router-link to="/auth/login"
           >Login</router-link>
-          <a
-            href="/auth/signup"
-            target="_blank"
-          >Signup</a>
+          <router-link to="/auth/signup"
+          >Signup</router-link>
         </p>
       </v-col>
     </v-row>
