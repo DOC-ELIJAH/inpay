@@ -18,12 +18,8 @@
         <p class="subheading font-weight-regular">
           For help and collaboration with other Vuetify developers,
           <br>please join our online
-          <router-link to="/auth/login">
-            Click to Login
-          </router-link> |
-          <router-link to="/auth/signup">
-            Signup
-          </router-link>
+          <router-link to="/auth/login">Click to Login</router-link> |
+          <router-link to="/auth/signup">Signup</router-link> 
         </p>
       </v-col>
     </v-row>
