@@ -1,7 +1,14 @@
 import axios from "axios";
-const baseUrl=window.location.protocol+"//"+window.location.hostname+':5000/v1/';
+var baseUrl=window.location.protocol+"//"+window.location.hostname+':5000/v1/'
+//var baseUrl='http://inpay.interranetworks.com:5000/v1'
+//baseUrl='inpay.interranetworks.com'
+baseUrl=baseUrl.replace('inpay', 'inpayapi');
+if(!baseUrl.includes('localhost') || !baseUrl.includes('192.168.0.58')){
+ // console.log("not local")
+  baseUrl=baseUrl.replace('inpay', 'inpayapi');
+}
 
-
+console.log(baseUrl)
 export async function createAccount(data){
     let result={};
     const response=await axios.post(`${baseUrl}account/create-merchant`, data)
