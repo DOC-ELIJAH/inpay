@@ -116,7 +116,7 @@
                     </form>
                 <span class="font-size-13 text-muted d-block text-center">
                       Already have an account?
-                      <a class="blue" href="/auth/login"> Login </a>
+                      <router-link to="/auth/login"><a class="blue"> Login </a></router-link>
                 </span>
                 </div>
 </template>
