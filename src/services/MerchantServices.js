@@ -1,13 +1,13 @@
 import axios from "axios";
 import createAccount from './AccountServices';
 //this baseurl will be refactor to the mainjs as a global varible
-var baseUrl=window.location.protocol+"://"+window.location.hostname+':5000/v1/'
+var baseUrl=window.location.protocol+"//"+window.location.hostname+':5000/v1/'
 //baseUrl='inpay.interranetworks.com'
-
-if(!baseUrl.includes('localhost') || !baseUrl.includes('192.168.0.58')){
-    // console.log("not local")
-     baseUrl=baseUrl.replace('inpay', 'inpayapi');
- }
+baseUrl=baseUrl.replace('inpay', 'inpayapi');
+// if(!baseUrl.includes('localhost') || !baseUrl.includes('192.168.0.58')){
+//     // console.log("not local")
+//      baseUrl=baseUrl.replace('inpay', 'inpayapi');
+//  }
 //console.log(baseUrl)
 
 export async function editProfile(data){
