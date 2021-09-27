@@ -245,7 +245,7 @@
                 .then(res=>{
                     this.banks=res.message.data
                 }).catch(err=>{
-
+                    
                 });
             }
         },

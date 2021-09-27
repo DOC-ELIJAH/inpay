@@ -148,9 +148,9 @@
         </v-list-item>
         <br>
         <v-list-item class="active">
-            <div>
-                <button @click="logout" type="submit" class="btn btn-primary btnLogout"><a href="/auth/logout">Logout</a></button>
-            </div>
+                <div>
+                    <button @click="logout" type="submit" class="btn btn-primary btnLogout"><a href="/auth/logout">Logout</a></button>
+                </div>
         </v-list-item>
     </v-list>
             </ul>
