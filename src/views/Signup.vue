@@ -208,7 +208,7 @@ export default {
 					          btn.innerHTML='Create Account'
                     btn.removeAttribute("disabled", null)
                   }
-                  this.$router.push({path:'/auth/account-confirm/'});
+                  //this.$router.push({path:'/auth/account-confirm/'});
                 }).catch(err=>{
                   this.errorMessage=err;
                    btn.innerHTML='Create Account'
