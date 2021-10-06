@@ -18,7 +18,6 @@ export async function userProfile(){
     return response.data;
 }
 
-
 // export default {
 //     created(){
 //         this.$merchantMixin_fetchUser(this.$route.params.firstName)

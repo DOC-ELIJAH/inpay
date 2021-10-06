@@ -10,8 +10,8 @@
                 </div>
                 <div v-if="successMessage" class="alert alert-success">{{this.successMessage}}</div>
                 <h4 style="text-align:center;">Merchant Details</h4>
-                <div class="m-t-25">
-                    <form @submit.prevent="merchantCreate">
+                <div class="mb-3">
+                    <form @submit.prevent="merchantCreate" >
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="businessName">Business Name <span class="required-feilds">*</span></label>
@@ -40,6 +40,7 @@
                                 <label for="language">Language</label>
                                 <select v-model="language" id="language" class="custom-select" style="min-width: 180px;" required>
                                     <option selected>Select Language</option>
+                                    <option value="english">English</option>
                                     <option value="yoruba">Yoruba</option>
                                     <option value="igbo">Igbo</option>
                                     <option value="hausa">Hausa</option>
@@ -53,11 +54,38 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="bvnNumber">Bvn Number <span class="required-feilds">*</span></label>
-                                <input type="text" class="form-control" v-model="bvn_number" id="bvnNumber" placeholder="BVN Number">
+                                <input type= "text" @keypress="isNumber($event)" class="form-control" 
+                                    v-model.trim="$v.bvn_number.$model" :class="{'is-invalid':$v.bvn_number.$error, 'is-valid':!$v.bvn_number.$invalid }" 
+                                    id="bvnNumber" placeholder="BVN Number"
+                                >
+                                <div class="valid-feedback">Your bvn number is valid!</div>
+                                <div class="invalid-feedback">
+                                    <span v-if="!$v.bvn_number.required">Your bvn number is required</span>
+                                    <span v-if="!$v.bvn_number.minLength">
+                                        Your bvn number must have at least {{ $v.bvn_number.$params.minLength.min }} numbers
+                                    </span>
+                                    <span v-if="!$v.bvn_number.maxLength">
+                                        Your bvn number must have at least {{ $v.bvn_number.$params.maxLength.max }} numbers
+                                    </span>
+                                </div>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="ninNumber">Nin Number<span class="required-feilds">*</span></label>
-                                <input type="text" class="form-control" v-model="nin_number" id="ninNumber" placeholder="Nin Number">
+                                <input type="text" 
+                                    v-model.trim="$v.nin_number.$model" :class="{'is-invalid':$v.nin_number.$error, 'is-valid':!$v.nin_number.$invalid }" 
+                                    @keypress="isNumber($event)" class="form-control" v-model="nin_number" 
+                                    id="ninNumber" placeholder="Nin Number"
+                                >
+                                <div class="valid-feedback">Your nin number is valid!</div>
+                                <div class="invalid-feedback">
+                                    <span v-if="!$v.nin_number.required">Your nin number is required</span>
+                                    <span v-if="!$v.nin_number.minLength">
+                                        Your nin number must have at least {{ $v.nin_number.$params.minLength.min }} numbers
+                                    </span>
+                                    <span v-if="!$v.nin_number.maxLength">
+                                        Your nin number must have at least {{ $v.nin_number.$params.maxLength.max }} numbers
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         <div class="form-row">
@@ -80,12 +108,13 @@
                                 <input type="text" class="form-control" v-model="account_type" id="accountType" name="accountType">
                             </div>
                                 <div class="form-group col-md-6">
-                                <label for="branch">Branch </label>
+                                <label for="branch">Bank Branch </label>
                                 <input type="text" class="form-control" v-model="branch" id="branch" placeholder="Branch">
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary float-right btn-profile">Update Merchant Profile</button>
                     </form>
+                    
                 </div>
             </div>
         </div>
@@ -93,7 +122,7 @@
 </template>
 <script>
     import { validationMixin } from 'vuelidate';
-    import { required } from 'vuelidate/lib/validators';
+    import { required, minLength, maxLength } from 'vuelidate/lib/validators';
     import axios from 'axios';
     import { userProfile, editProfile } from '../services/MerchantServices.js';
     import { getBanks, getStates } from '../services/BaseServices.js';
@@ -114,10 +143,14 @@
                 required
             },
             bvn_number: {
-                required
+                required,
+                minLength: minLength(11),
+                maxLength: maxLength(11)
             },
             nin_number: {
-                required
+                required,
+                minLength: minLength(11),
+                maxLength: maxLength(11)
             },
             account_name: {
                 required
@@ -180,6 +213,7 @@
            })
           this.getBaseData()
         },
+       
         methods: {
             merchantCreate(){
                 let btn=document.querySelector(".btn-profile");
@@ -232,6 +266,15 @@
                 }).catch(err=>{
 
                 });
+            },
+            isNumber: function(evt) {
+                evt = (evt) ? evt : window.event;
+                var charCode = (evt.which) ? evt.which : evt.keyCode;
+                if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
+                    evt.preventDefault();
+                }else {
+                    return true;
+                }
             }
         },
     }
