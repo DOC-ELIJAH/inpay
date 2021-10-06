@@ -27,38 +27,10 @@ export default
   components: { SidebarComponent, HeaderComponent }, 
 
     created () {
-        //this.fetchUser(this.$route.params.fullname)
-
-        //const token = localStorage.getItem('token')
-
-        //if(token) {
-            this.fetchAuthenticatedUser()
-       // }
+        this.fetchAuthenticatedUser()
     },
 
     methods: {
-        // fetchUser(fullname) {
-        //     let username = createAccount(`/${fullname}`);
-        //     if(fullname) {
-        //         username.then(response=>{
-        //             if(response.statusCode==200){
-        //                 this.user.fullname = repsonse.message[0].merchant_info.fullname;
-        //                 this.user.email = response.message[0].merchant_info.email;
-        //             }
-                    
-        //         })
-        //     }else {
-        //         const token = localStorage.getItem('token')
-
-        //         userProfile().then(response=>{
-        //             if(response.statusCode==200) {
-        //                 this.user.fullname = reponse.message[0].merchant_info.fullname;
-        //                 this.user.email = response.message[0].merchant_info.email;
-        //             }
-        //         })
-        //     }
-        // },
-
         fetchAuthenticatedUser(){
             let token=localStorage.getItem('token');
             if(!token){
@@ -86,10 +58,8 @@ export default
                         this.user.fullname=response.message[0].merchant_info.fullname
                     }
                 }).catch(err=>{
-                   // console.log(err)
                 })
             }
-           // console.log(this.user)
         }
     }, 
     data: () => ({

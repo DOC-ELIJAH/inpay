@@ -18,11 +18,11 @@
                                 {{ user.fullname }}
                             </h5>
                         </router-link>
-                        <router-link>
+                        <div class="profile-email">
                             <h6>
                                 {{ user.email }}
                             </h6>
-                        </router-link>
+                        </div>
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item">
                                 <a class="nav-link active" id="profile-tab"  href="#profile" role="tab" aria-controls="profile" aria-selected="true">Merchant Profile</a>
@@ -30,8 +30,8 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-md-2">
-                    <router-link to="/views/MerchantProfile"><input type="submit" class="btn btn-primary float-right" name="btnAddMore" value="Edit Merchant Profile"/></router-link>
+                <div class="col-md-2" >
+                    <router-link to="/merchant-profile"><input type="submit" class="btn btn-primary float-right" name="btnAddMore" value="Edit Merchant Profile"/></router-link>
                 </div>
             </div>  
             <div class="row">
@@ -86,50 +86,10 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <label>State ID</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p v-show="user.state_id">{{ user.state_id }}</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
                                                 <label>City</label>
                                             </div>
                                             <div class="col-md-6">
                                                 <p v-show="user.city">{{ user.city }}</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Account Name</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p v-show="user.account_name">{{ user.account_name }}</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Bank ID</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p v-show="user.bank_id">{{ user.bank_id }}</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Account Type</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p v-show="user.account_type">{{ user.account_type }}</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Branch</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p v-show="user.branch">{{ user.branch }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -149,7 +109,13 @@
     import { userProfile, editProfile } from '../services/MerchantServices.js';
     import { getBanks, getStates } from '../services/BaseServices.js';
     export default {
-        props:['user', 'authUser'],
+        props:['user']
+       
+    //    computed:{
+    //        isOwner() {
+    //            return this.user.id
+    //        },
+    //    }
        
     }
 </script>
