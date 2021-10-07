@@ -58,6 +58,11 @@ export default new Router({
 				}
 			},
 			{
+				path: "/auth/logout",
+				name: "logout",
+				component: ()=> import("./views/Logout")
+			},
+			{
 				path: "/auth/signup",
 				name: "signup",
 				component: ()=> import("./views/Signup"),

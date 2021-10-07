@@ -44,7 +44,7 @@ const { userOtp }=require("../services/AccountServices");
                   }else{
                       localStorage.setItem("token", res.message.accessToken);
                       localStorage.setItem("refreshToken", res.message.refreshToken);
-                      this.$router.push({path:'/dashboard'});
+                      this.$router.push({path:'/merchant-profile'});
                   }
                 })  
              

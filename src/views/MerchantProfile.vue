@@ -24,10 +24,10 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="stateID">State ID <span class="required-feilds">*</span></label>
-                                <select class="form-control" v-model="state_id" id="stateID">
+                                <label for="stateID">State<span class="required-feilds">*</span></label>
+                                <select class="form-control" v-model="state" id="state">
                                     <option value="">Select State</option>
-                                    <option v-for="state in states" :value="state.id" >{{state.state}}</option>
+                                    <option v-for="state in states" :value="state" >{{state.state}}</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-6">
@@ -40,7 +40,6 @@
                                 <label for="language">Language</label>
                                 <select v-model="language" id="language" class="custom-select" style="min-width: 180px;" required>
                                     <option selected>Select Language</option>
-                                    <option value="english">English</option>
                                     <option value="yoruba">Yoruba</option>
                                     <option value="igbo">Igbo</option>
                                     <option value="hausa">Hausa</option>
@@ -54,60 +53,65 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="bvnNumber">Bvn Number <span class="required-feilds">*</span></label>
-                                <input type= "text" @keypress="isNumber($event)" class="form-control" 
-                                    v-model.trim="$v.bvn_number.$model" :class="{'is-invalid':$v.bvn_number.$error, 'is-valid':!$v.bvn_number.$invalid }" 
+                                <input type="text" @keypress="isNumber($event)" class="form-control" 
+                                    v-model.trim="$v.bvn_number.$model" :class="{'is-invalid':$v.bvn_number.$error, 'is-valid':!$v.bvn_number.$invalid}" 
                                     id="bvnNumber" placeholder="BVN Number"
                                 >
-                                <div class="valid-feedback">Your bvn number is valid!</div>
+                                <div class="valid-feedback">Your bvn number meets the required length</div>
                                 <div class="invalid-feedback">
                                     <span v-if="!$v.bvn_number.required">Your bvn number is required</span>
-                                    <span v-if="!$v.bvn_number.minLength">
-                                        Your bvn number must have at least {{ $v.bvn_number.$params.minLength.min }} numbers
+                                    <span v-if="!$v.bvn_number.minLength">Your bvn number must have at least 
+                                        {{ $v.bvn_number.$params.minLength.min }} numbers.
                                     </span>
-                                    <span v-if="!$v.bvn_number.maxLength">
-                                        Your bvn number must have at least {{ $v.bvn_number.$params.maxLength.max }} numbers
+                                    <span v-if="!$v.bvn_number.maxLength">Your bvn number must have at most 
+                                        {{ $v.bvn_number.$params.maxLength.max }} numbers.
                                     </span>
                                 </div>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="ninNumber">Nin Number<span class="required-feilds">*</span></label>
-                                <input type="text" 
-                                    v-model.trim="$v.nin_number.$model" :class="{'is-invalid':$v.nin_number.$error, 'is-valid':!$v.nin_number.$invalid }" 
-                                    @keypress="isNumber($event)" class="form-control" v-model="nin_number" 
-                                    id="ninNumber" placeholder="Nin Number"
+                                <input type="text" v-model.trim="$v.nin_number.$model" 
+                                    :class="{'is-invalid':$v.nin_number.$error, 'is-valid':!$v.nin_number.$invalid}" @keypress="isNumber($event)" 
+                                    class="form-control" id="ninNumber" placeholder="Nin Number"
                                 >
-                                <div class="valid-feedback">Your nin number is valid!</div>
+                                <div class="valid-feedback">Your nin number meets the required length</div>
                                 <div class="invalid-feedback">
                                     <span v-if="!$v.nin_number.required">Your nin number is required</span>
-                                    <span v-if="!$v.nin_number.minLength">
-                                        Your nin number must have at least {{ $v.nin_number.$params.minLength.min }} numbers
+                                    <span v-if="!$v.nin_number.minLength">Your nin number must have at least 
+                                        {{ $v.nin_number.$params.minLength.min }} numbers.
                                     </span>
-                                    <span v-if="!$v.nin_number.maxLength">
-                                        Your nin number must have at least {{ $v.nin_number.$params.maxLength.max }} numbers
+                                    <span v-if="!$v.nin_number.maxLength">Your nin number must have at most 
+                                        {{ $v.nin_number.$params.maxLength.max }} numbers.
                                     </span>
                                 </div>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="accountName">Account Name<span class="required-feilds">*</span></label>
-                                <input type="text" class="form-control" v-model="account_name" id="accountName" name="accountName" placeholder="Account Name">
+                                <label for="bankName">Bank Name<span class="required-feilds">*</span></label>
+                                <select class="form-control" v-model="bank_name" id="bank_name">
+                                    <option value="">Select Bank</option>
+                                    <option v-for="bank in banks" :value="bank.name">{{bank.bank_name}}</option>
+                                </select>
                             </div>
                                 <div class="form-group col-md-6">
-                                <label for="bankID">Bank ID <span class="required-feilds">*</span></label>
-                                <select class="form-control" v-model="bank_id" id="bandId">
-                                    <option value="">Select Bank</option>
-                                    <option v-for="bank in banks" :value="bank.id">{{bank.bank_name}}</option>
-                                </select>
+                                <label for="accountName">Account Name<span class="required-feilds">*</span></label>
+                                <input type="text" class="form-control" v-model="account_name" id="accountName" name="accountName" placeholder="Account Name">
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="accountType">Account Type</label>
-                                <input type="text" class="form-control" v-model="account_type" id="accountType" name="accountType">
+                                <label for="accountNumber">Account Number</label>
+                                <input type="text" @keypress="isNumber($event)" class="form-control" v-model="account_number" id="accountNumber" name="accountNumber" placeholder="Account Number">
                             </div>
                                 <div class="form-group col-md-6">
+                                <label for="accountType">Account Type</label>
+                                <input type="text" class="form-control" v-model="account_type" id="accountType" name="accountType" placeholder="Account Type">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
                                 <label for="branch">Bank Branch </label>
                                 <input type="text" class="form-control" v-model="branch" id="branch" placeholder="Branch">
                             </div>
@@ -152,10 +156,13 @@
                 minLength: minLength(11),
                 maxLength: maxLength(11)
             },
+            account_number: {
+                required
+            },
             account_name: {
                 required
             },
-            bank_id: {
+            bank_name: {
                 required
             }
         },
@@ -167,16 +174,17 @@
                 errorMessage:'',
                 business_name:this.user.business_name,
                 full_address:this.user.full_address,
-                state_id:'',
+                state:this.user.state,
                 bvn_number:this.user.bvn_number,
                 nin_number:this.user.nin_number,
+                account_number:this.user.account_number,
                 city:this.user.city,
                 language:this.user.language,
                 date_of_birth:this.user.date_of_birth,
-                account_name:this.user.accont_name,
-                bank_id:'',
+                account_name:this.user.account_name,
+                bank_name:this.bank_name,
                 account_type:this.user.account_type,
-                branch:''
+                branch:this.user.branch
             }
         },
         //beforeRouteEnter (to, from, next) {
@@ -206,14 +214,19 @@
                 this.language=res.message[0].merchant_info.language
                 this.email=res.message[0].merchant_info.email
                 this.phone=res.message[0].merchant_info.phone
+                this.bank_name=response.message[0].bank_info.bank_name
                 this.merchant_id=res.message[0].merchant_info.merchant_id
                 this.nin_number=res.message[0].merchant_info.nin_number
+                this.account_number=res.message[0].merchant_info.account_number
+                this.state=res.message[0].merchant_info.state
                 this.bvn_number=response.message[0].merchant_info.bvn_number
                 this.fullname=response.message[0].merchant_info.fullname
+                this.account_type=response.message[0].bank_info.account_type
+                this.account_name=response.message[0].bank_info.account_name
+                this.branch=response.message[0].bank_info.branch
            })
           this.getBaseData()
         },
-       
         methods: {
             merchantCreate(){
                 let btn=document.querySelector(".btn-profile");
@@ -229,6 +242,7 @@
                     language: this.language,
                     date_of_birth: this.date_of_birth,
                     account_name: this.account_name,
+                    account_number: this.account_number,
                     bank_id: this.bank_id,
                     account_type: this.account_type,
                     branch: this.branch,
@@ -264,18 +278,23 @@
                 .then(res=>{
                     this.banks=res.message.data
                 }).catch(err=>{
-
+                    
                 });
             },
             isNumber: function(evt) {
                 evt = (evt) ? evt : window.event;
                 var charCode = (evt.which) ? evt.which : evt.keyCode;
                 if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
-                    evt.preventDefault();
-                }else {
+                    evt.preventDefault();;
+                } else {
                     return true;
                 }
             }
+
+
+
+
+
         },
     }
 </script>

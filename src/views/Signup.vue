@@ -116,7 +116,7 @@
                     </form>
                 <span class="font-size-13 text-muted d-block text-center">
                       Already have an account?
-                      <a class="blue" href="/auth/login"> Login </a>
+                      <router-link to="/auth/login"><a class="blue"> Login </a></router-link>
                 </span>
                 </div>
 </template>
@@ -208,6 +208,7 @@ export default {
 					          btn.innerHTML='Create Account'
                     btn.removeAttribute("disabled", null)
                   }
+                  //this.$router.push({path:'/auth/account-confirm/'});
                 }).catch(err=>{
                   this.errorMessage=err;
                    btn.innerHTML='Create Account'

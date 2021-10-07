@@ -75,7 +75,7 @@
             >
               <span class="font-size-13 text-muted">
                 Don't have an account?
-                <a class="small" href="/auth/signup"> Signup</a>
+                <router-link to="/auth/signup"><a class="small"> Signup</a></router-link>
               </span>
               <button type="submit" class="btn btn-primary">Sign In</button>
             </div>
