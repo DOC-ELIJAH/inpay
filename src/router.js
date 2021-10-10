@@ -34,9 +34,14 @@ export default new Router({
 				component: ()=> import("./views/MerchantProfile"),
 			},
 			{
-				path: "/merchant-view",
-				name:"merchant-view",
-				component: ()=> import ("./views/MerchantView")
+				path: "/create-product",
+				name:"createproduct",
+				component: ()=> import ("./views/CreateProduct")
+			},
+			{
+				path: "/product-list",
+				name: "productlist",
+				component: ()=> import ("./views/ProductList")
 			},
 			{
 				path:"/merchant",

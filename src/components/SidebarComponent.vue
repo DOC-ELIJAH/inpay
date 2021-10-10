@@ -192,8 +192,8 @@ module.exports = {
             link:'/create-product',
         },
         {
-            text:'Products', 
-            link:'/products',
+            text:'List Products', 
+            link:'/product-list',
         }
       ]
     }),
