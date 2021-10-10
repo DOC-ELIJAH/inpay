@@ -39,7 +39,8 @@
                             <div class="form-group col-md-6">
                                 <label for="language">Language</label>
                                 <select v-model="language" id="language" class="custom-select" style="min-width: 180px;" required>
-                                    <option selected>Select Language</option>
+                                    <span selected>Select Language</span>
+                                    <option value="English">English</option>
                                     <option value="yoruba">Yoruba</option>
                                     <option value="igbo">Igbo</option>
                                     <option value="hausa">Hausa</option>
