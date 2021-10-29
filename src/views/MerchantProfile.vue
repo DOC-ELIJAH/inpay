@@ -128,7 +128,6 @@
 <script>
     import { validationMixin } from 'vuelidate';
     import { required, minLength, maxLength } from 'vuelidate/lib/validators';
-    import axios from 'axios';
     import { userProfile, editProfile } from '../services/MerchantServices.js';
     import { getBanks, getStates } from '../services/BaseServices.js';
     export default {
@@ -193,17 +192,7 @@
 
             //return token ? next() : next('/auth/login')
         //},
-        computed:{
-            businessNameComputed(){
-                return this.business_name
-            },
-            fullAddress(){
-                return this.full_address
-            },
-            ninNumber(){
-                return this.nin_number
-            }
-        },
+        
        created(){
            userProfile()
            .then(res=>{
@@ -230,6 +219,7 @@
         },
         methods: {
             merchantCreate(){
+                let token = localStorage.getItem('token')
                 let btn=document.querySelector(".btn-profile");
                 btn.innerHTML='<div class="spinner-border text-info"></div>'
                 btn.setAttribute("disabled", true)
@@ -253,15 +243,14 @@
                 // return;
                 const result = editProfile(payload)
                 .then(res=>{
-                    if(res.statusCode!=201){
-                        this.errorMessage=res.errors
+                    if(res.statusCode!=200){
+                        this.errorMessage=res.message
+                        btn.innerHTML='Update Merchant Profile'
+                        btn.removeAttribute("disabled", null)
                     }else{
-                        this.successMessage="Profile updated successfully"
                         this.$router.push({path:'/merchant'});
                     }
                 })
-                btn.innerHTML='Update Merchant Profile'
-                btn.removeAttribute("disabled", null)
             },
 
             getBaseData(){

@@ -84,7 +84,6 @@ export default
             fullname:"",
             email:"",
             phone:"",
-            
         }
     }),
 };

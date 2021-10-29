@@ -36,12 +36,12 @@ export default new Router({
 			{
 				path: "/create-product",
 				name:"createproduct",
-				component: ()=> import ("./views/CreateProduct")
+				component: ()=> import ("./views/Products/CreateProduct")
 			},
 			{
 				path: "/product-list",
 				name: "productlist",
-				component: ()=> import ("./views/ProductList")
+				component: ()=> import ("./views/Products/ProductList")
 			},
 			{
 				path:"/merchant",
