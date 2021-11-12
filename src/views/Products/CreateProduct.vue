@@ -4,8 +4,8 @@
         <div class="card">
             <div class="card-body">
                 <div class="mb-3">
-                    <div v-if="!submitted">
-                        <form @submit.prevent="handleSubmit">
+                    <div v-if="!submitted" >
+                        <form @submit.prevent="saveProduct" enctype="multipart/form-data">
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="productName">Product Name <span class="required-feilds">*</span></label>
@@ -13,9 +13,9 @@
                                 </div>
                                     <div class="form-group col-md-6">
                                     <label > Product Image</label>
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="productImg" name="productImg" accept="image/*">
-                                        <label  class="custom-file-label" for="img">Select Product Image </label>
+                                    <div class="">
+                                        <input type="file" multiple class="" id="productImg" name="productImg" accept="image/*" @change="filesChange($event.target.files); fileCount = $event.target.files.length">
+                                       
                                     </div>
                                 </div>
                             </div>
@@ -101,7 +101,8 @@ export default {
                 cost_price: "",
                 selling_price: "",
                 status: "",
-                availability: ""
+                availability: "",
+                productImages:[]
             }
         }
 
@@ -121,35 +122,30 @@ export default {
     },
     methods: {
         saveProduct() {
-            let payload = {
-                product_name: this.product.product_name,
-                product_description: this.product.product_description,
-                product_category: this.product.product_category,
-                cost_price: this.product.cost_price,
-                selling_price: this.product.selling_price,
-                status: this.product.status,
-                availability: this.product.availability
-            }
+            var fd=new FormData();
+            fd.append('product_name', this.product.product_name)
+            fd.append('product_description', this.product.product_description)
+            fd.append('cost_price', this.product.cost_price)
+            fd.append('selling_price', this.product.selling_price)
+            fd.append('product_category', this.product.product_category)
+            fd.append('availability', this.product.availability)
+            this.productImages.forEach(e=>{
+                fd.append('product_image', e)
+            });
+            productCreate(fd)
+            .then(response=>{
+                console.log(response)
+            }).catch(error=>{
+
+            })
+            
         },
 
-        handleSubmit() {
-            let token = localStorage.getItem('token')
-            let btn=document.querySelector(".btn-primary");
-            btn.innerHTML='<div class="spinner-border text-info"></div>'
-            btn.setAttribute("disabled", true)
-            const result = productCreate(payload)
-            .then(response=>{
-                if (response.statusCode!=201) {
-                    this.errorMessage=response.errors
-                }else {
-                    this.product.id = response.payload.id
-                    //this.successMessage="Product created successfully"
-                    this.submitted = true;
-                }
+        filesChange(files) {      
+            this.productImages=files
+            this.productImages.forEach(e=>{
+                console.log(e)
             })
-            .catch(e => {
-                console.log(e);
-            });
         },
         newProduct() {
             this.submitted = false;

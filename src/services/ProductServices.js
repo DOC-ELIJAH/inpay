@@ -1,19 +1,16 @@
 import axios from "axios";
-
-
-var baseUrl=window.location.protocol+"//"+window.location.hostname+':5000/v1/'
-baseUrl=baseUrl.replace('inpay', 'inpayapi');
-
+import params from '../configs/params'
+var baseUrl=params.baseUrl+'secured/';
+//baseUrl=baseUrl.replace('inpay', 'inpayapi');
 
 export async function productCreate(data) {
-    let result={};
-    const response=await axios.post(`${baseUrl}/secured/products`, data)
+    
+    const response=await axios.post(`${baseUrl}products`, data)
     return response.data;
 }
 
 export async function productList() {
-    let result = {};
-    const response = await axios.get(`${baseUrl}/secured/products?page=0&limit=${id}`)
+    const response = await axios.get(`${baseUrl}/products?page=0&limit=${id}`)
     return response
 }
 

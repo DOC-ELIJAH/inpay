@@ -13,7 +13,7 @@ import VueSweetalert2 from 'vue-sweetalert2';
 Vue.config.productionTip = false
 axios.interceptors.request.use(
   request=>{
-    request.headers.ContentType='application/json';
+  //  request.headers.ContentType='application/json';
     request.headers.Accept='application/json';
     if(request.url.includes('secured')){
       request.headers.Authorization='Bearer '+localStorage.getItem('token')

@@ -103,8 +103,26 @@
             <v-list-item-title>Dashboard</v-list-item-title>
         </v-list-item>
 
+         <v-list-group
+            :value="false"
+            prepend-icon="anticon anticon-appstore"
+            
+            >
+         <template v-slot:activator>
+            <v-list-item-title >Profile</v-list-item-title>
+         </template>
+            <v-list-item
+                v-for="(title, i) in profile"
+                :key="i"
+                :to="title.link"
+                link
+            >
+                <v-list-item-title>{{title.text}}</v-list-item-title>
+            </v-list-item>
+        </v-list-group>
+
         <v-list-group
-            :value="true"
+            :value="false"
             prepend-icon="anticon anticon-shopping-cart "
             
             >
@@ -122,7 +140,7 @@
         </v-list-group>
         
         <v-list-group
-            :value="true"
+            :value="false"
             prepend-icon="anticon anticon-appstore"
             
             >
@@ -194,6 +212,16 @@ module.exports = {
         {
             text:'List Products', 
             link:'/product-list',
+        }
+      ],
+       profile :[
+        {
+            text:'Create', 
+            link:'/merchant-profile',
+        },
+        {
+            text:'view', 
+            link:'/merchant',
         }
       ]
     }),
