@@ -93,8 +93,6 @@ export default {
     data() {
         return {
             product: {
-                id: null,
-                submitted: false,
                 product_name: "",
                 product_description: "", 
                 product_category: "",
@@ -103,22 +101,10 @@ export default {
                 status: "",
                 availability: "",
                 productImages:[]
-            }
-        }
+            },
+            submitted: false
+        };
 
-    },
-    created() {
-        productItem()
-        .then(res=>{
-            if(res.statusCode!=200) return;
-            this.product_name = res.message[0].product_info.product_name
-            this.product_description = res.message[0].product_info.product_description
-            this.product_category = res.message[0].product_info.product_category
-            this.cost_price = res.message[0].product_info.cost_price
-            this.selling_price = res.message[0].product_info.selling_price
-            this.status = res.message[0].product_info.status
-            this.availability = res.message.product_info.availability
-        })
     },
     methods: {
         saveProduct() {
@@ -129,9 +115,11 @@ export default {
             fd.append('selling_price', this.product.selling_price)
             fd.append('product_category', this.product.product_category)
             fd.append('availability', this.product.availability)
+             
             this.productImages.forEach(e=>{
                 fd.append('product_image', e)
             });
+            
             productCreate(fd)
             .then(response=>{
                 console.log(response)
@@ -140,13 +128,13 @@ export default {
             })
             
         },
-
         filesChange(files) {      
             this.productImages=files
             this.productImages.forEach(e=>{
                 console.log(e)
             })
         },
+        
         newProduct() {
             this.submitted = false;
             this.product = {};

@@ -10,21 +10,21 @@ export async function productCreate(data) {
 }
 
 export async function productList() {
-    const response = await axios.get(`${baseUrl}/products?page=0&limit=${id}`)
+    const response = await axios.get(`${baseUrl}products?page=0&limit=10`)
     return response
 }
 
-export async function productItem() {
+export async function productItem(id) {
     let result = {};
-    const response = await axios.get(`${baseUrl}/secured/products/${id}`)
+    const response = await axios.get(`${baseUrl}products/${id}`)
 }
 
 export async function productUpdate(data) {
     let result = {};
-    const response = await axios.patch(`${baseUrl}/secured/products/${id}`, data)
+    const response = await axios.patch(`${baseUrl}products/${id}`, data)
 }
 
 export async function productDelete() {
     let result = {};
-    const response = await axios.del(`${baseUrl}/secured/products/${id}`)
+    const response = await axios.del(`${baseUrl}products/${id}`)
 }

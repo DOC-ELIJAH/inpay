@@ -44,6 +44,11 @@ export default new Router({
 				component: ()=> import ("./views/Products/ProductList")
 			},
 			{
+				path: "/product/:id",
+				name: "product",
+				component: ()=> import ("./views/Products/Product")
+			},
+			{
 				path:"/merchant",
 				name : "Merchant Profile View",
 				component : ()=>import ("./views/Merchant")
