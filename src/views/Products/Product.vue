@@ -35,6 +35,12 @@
                     <label class="font-weight-semibold" for="Availability">Availability</label>
                     <input type="text" class="form-control" v-model="currentProduct.availability" id="availability" placeholder="Availability" value="H&M">
                 </div>
+                <div class="m-b-15">
+                    <button class="btn btn-primary">
+                        <i class="anticon anticon-save"></i>
+                        <span>Save</span>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
