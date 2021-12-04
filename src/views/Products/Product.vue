@@ -35,10 +35,29 @@
                     <label class="font-weight-semibold" for="Availability">Availability</label>
                     <input type="text" class="form-control" v-model="currentProduct.availability" id="availability" placeholder="Availability" value="H&M">
                 </div>
+                <div class="form-group">
+                    <label><strong>Status:</strong></label>
+                    {{currentProduct.published ? "Published": "Pending"}}
+                </div>
                 <div class="m-b-15">
-                    <button class="btn btn-primary">
+                    <button class="btn btn-primary"
+                        v-if="currentProduct.published"
+                        @click="updatePublished(false)"
+                    >
                         <i class="anticon anticon-save"></i>
-                        <span>Save</span>
+                        <span>Unpublish</span>
+                    </button>
+                    <button v-else class="btn btn-primary"
+                        @click="updatePublished(true)"
+                    >
+                        <i class="anticon anticon-save"></i>
+                        <span>Publish</span>
+                    </button>
+                    <button class="badge badge-success"
+                        @click="updateProduct"
+                    >
+                        <i class="anticon anticon-submit"></i>
+                        <span>Update</span>
                     </button>
                 </div>
             </div>

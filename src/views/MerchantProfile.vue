@@ -26,7 +26,7 @@
                             <label for="stateID">State<span class="required-feilds">*</span></label>
                             <select class="form-control" v-model="state" id="state">
                                 <option value="">Select State</option>
-                                <option v-for="state in states" :key="state" >{{state.state}}</option>
+                                <option v-for="state in states" :key="state" value="state.id" >{{state.state}}</option>
                             </select>
                         </div>
                         <div class="form-group col-md-6">
@@ -91,7 +91,7 @@
                             <label for="bankName">Bank Name<span class="required-feilds">*</span></label>
                             <select class="form-control" v-model="bank_name" id="bank_name">
                                 <option value="">Select Bank</option>
-                                <option v-for="bank in banks" :key="bank.name" value="">{{bank.bank_name}}</option>
+                                <option v-for="bank in banks" :key="bank.name" value="bank.id">{{bank.bank_name}}</option>
                             </select>
                         </div>
                             <div class="form-group col-md-6">
