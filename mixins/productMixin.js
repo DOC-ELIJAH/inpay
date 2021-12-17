@@ -15,8 +15,8 @@ export default{
             }else {
                 const result = productItem(id)
                 result.then(response=>{
-                    if(response.statusCode==400 && this.$route.path != 'secured/products/${id}'){
-                        this.$router.push({path:'secured/products/${id}'});
+                    if(response.statusCode==400 && this.$route.path != '/merchant-profile'){
+                        this.$router.push({path:'/merchant-profile'});
                     }
                     if(response.statusCode==200) {
                         this.user.product_name=response.message[0].product_info.product_name.id
@@ -42,7 +42,7 @@ export default{
         }
     },
     data: () => ({
-        user: {
+        users: {
             id: null,
             product_name: '',
             product_description: '',

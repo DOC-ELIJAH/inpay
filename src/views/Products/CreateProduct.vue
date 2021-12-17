@@ -67,6 +67,10 @@
                                     </select>
                                 </div>
                                 <div class="form-group col-md-6">
+                                    <label for="productDescription">Product Description <span class="required-feilds">*</span></label>
+                                    <input type="text" class="form-control" v-model="product.product_description" id="productDescription" placeholder="Product Description" required>
+                                </div>
+                                <div class="form-group col-md-6">
                                     <label for="availability">Availability <span class="required-feilds">*</span></label>
                                     <select class="custom-select" v-model="product.availability" style="min-width: 180px;" required>
                                         <option selected>Select Availability</option>
@@ -115,10 +119,13 @@ export default {
             fd.append('selling_price', this.product.selling_price)
             fd.append('product_category', this.product.product_category)
             fd.append('availability', this.product.availability)
-             
-            this.productImages.forEach(e=>{
-                fd.append('product_image', e)
-            });
+            
+            //if(this.productImages.length>0){
+                 //this.productImages.forEach(e=>{
+                    //fd.append('product_image', e)
+               // });
+            //}
+           
             
             productCreate(fd)
             .then(response=>{
@@ -128,12 +135,14 @@ export default {
             })
             
         },
-        filesChange(files) {      
-            this.productImages=files
-            this.productImages.forEach(e=>{
-                console.log(e)
-            })
-        },
+        //filesChange(files) {      
+          
+            //this.productImages=files
+          
+           //this.productImages.forEach(e=>{
+                //console.log(e)
+            //})
+        //},
         
         newProduct() {
             this.submitted = false;

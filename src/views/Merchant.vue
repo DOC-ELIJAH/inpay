@@ -166,11 +166,6 @@
     </div>    
 </template>
 <script>
-    import { validationMixin } from 'vuelidate';
-    import { required } from 'vuelidate/lib/validators';
-    import axios from 'axios';
-    import { userProfile, editProfile } from '../services/MerchantServices.js';
-    import { getBanks, getStates } from '../services/BaseServices.js';
     export default {
         props:['user']
        

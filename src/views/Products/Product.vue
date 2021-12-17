@@ -3,57 +3,38 @@
         <div class="page-header">
             <h2 class="header-title">Product</h2>
         </div>
-        <div class="card">
+        <div class="card" v-if="currentProduct">
             <div class="card-body">
                 <div class="form-group">
                     <label class="font-weight-semibold" for="productName">Product Name</label>
-                    <input type="text" class="form-control" v-model="currentProduct.product_name" id="productName" placeholder="Product Name" value="Skinny Men Blazer">
+                    <input type="text" class="form-control" v-model="currentProduct.Product.Name" id="productName" placeholder="Product Name">
                 </div>
                 <div class="form-group">
                     <label class="font-weight-semibold" for="productName">Product Description</label>
-                    <input type="text" class="form-control" v-model="currentProduct.product_description" id="productDescription" placeholder="Product Description" value="Skinny Men Blazer">
+                    <input type="text" class="form-control" v-model="currentProduct.Product.Description" id="productDescription" placeholder="Product Description">
                 </div>
                 <div class="form-group">
                     <label class="font-weight-semibold" for="productCategory">Product Category</label>
-                    <select class="custom-select" v-model="currentProduct.product_category" id="productCategory">
-                        <option value="cloths" selected>Cloths</option>
-                        <option value="homeDecoration">Home Decoration</option>
-                        <option value="eletronic">Eletronic</option>
-                        <option value="jewellery">Jewellery</option>
-                        <option value="agriculture">Agriculture</option>
-                    </select>
+                    <input type="text" class="form-control" v-model="currentProduct.Product.Category" id="productCategory" placeholder="Product Description">
                 </div>
                 <div class="form-group">
                     <label class="font-weight-semibold" for="costPrice">Cost Price</label>
-                    <input type="text" class="form-control" v-model="currentProduct.cost_price" id="costPrice" placeholder="Price" value="$ 199">
+                    <input type="text" class="form-control" v-model="currentProduct.Product.Cost_Price" id="costPrice" placeholder="Price">
                 </div>
                 <div class="form-group">
                     <label class="font-weight-semibold" for="sellingPrice">Selling Price</label>
-                    <input type="text" class="form-control" v-model="currentProduct.selling_price" id="sellingPrice" placeholder="Selling Price" value="$ 199">
+                    <input type="text" class="form-control" v-model="currentProduct.Product.Selling_Price" id="sellingPrice" placeholder="Selling Price" value="$ 199">
                 </div>
                 <div class="form-group">
                     <label class="font-weight-semibold" for="Availability">Availability</label>
-                    <input type="text" class="form-control" v-model="currentProduct.availability" id="availability" placeholder="Availability" value="H&M">
-                </div>
-                <div class="form-group">
-                    <label><strong>Status:</strong></label>
-                    {{currentProduct.published ? "Published": "Pending"}}
+                    <select class="custom-select" v-model="currentProduct.Product.Availability" style="min-width: 180px;" required>
+                        <option selected>Select Availability</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
                 </div>
                 <div class="m-b-15">
-                    <button class="btn btn-primary"
-                        v-if="currentProduct.published"
-                        @click="updatePublished(false)"
-                    >
-                        <i class="anticon anticon-save"></i>
-                        <span>Unpublish</span>
-                    </button>
-                    <button v-else class="btn btn-primary"
-                        @click="updatePublished(true)"
-                    >
-                        <i class="anticon anticon-save"></i>
-                        <span>Publish</span>
-                    </button>
-                    <button class="badge badge-success"
+                    <button class="btn btn-primary float-right"
                         @click="updateProduct"
                     >
                         <i class="anticon anticon-submit"></i>
@@ -61,6 +42,10 @@
                     </button>
                 </div>
             </div>
+        </div>
+        <div v-else>
+            <br/>
+            <p>Please click on a product...</p>
         </div>
     </div>
 </template>
@@ -70,49 +55,36 @@
         data() {
             return {
                currentProduct: null,
-               message: '',
             }
         },
         methods: {
             getProduct(id) {
-                productItem(id)
-                .then(res=>{
-                    this.currentProduct = res.data;
-                })
-                .catch(err=>{
-                    console.log(err);
-                })
-                
-            },
-            updatePublished(status) {
-                let data = {
-                    id: this.currentProduct.id,
-                    product_name: this.currentProduct.product_name,
-                    product_description: this.currentProduct.product_description, 
-                    product_category: this.currentProduct.product_category,
-                    cost_price: this.currentProduct.cost_price,
-                    selling_price: this.currentProduct.selling_price,
-                    availability: this.currentProduct.availability,
-                    published: status
-                };
-                productUpdate(this.currentProduct.id, data)
-                .then(res=>{
-                    this.currentProduct.published = status;  
+                const result = productItem(id)
+                .then(response=>{
+                    this.currentProduct = response.data.message;
                 })
                 .catch(e=>{
                     console.log(e);
                 })
             },
             updateProduct() {
-                productUpdate(this.currentProduct.id, this.currentProduct)
-                .then(res=>{
-                    this.message = 'This product has successfully been updated';
-                })
-                .catch(e=>{
-                    console.log(e);
+                let data = {
+                    id: this.currentProduct.Product.id,
+                    Name: this.currentProduct.Product.Name,
+                    Description: this.currentProduct.Product.Description,
+                    Category: this.currentProduct.Product.Category,
+                    Cost_Price: this.currentProduct.Product.Cost_Price,
+                    Selling_Price: this.currentProduct.Product.Selling_Price,
+                    Availability: this.currentProduct.Product.Availability,
+                };
+                console.log(data)
+                productUpdate(this.currentProduct.Product.id, data)
+                .then(response =>{
+                    console.log(response.data.message);
+                    message = "Product update was successful"
+                    this.$router.push({path:'/product-list'});
                 })
             }
-    
             
         },
         mounted() {

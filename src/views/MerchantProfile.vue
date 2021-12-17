@@ -26,7 +26,7 @@
                             <label for="stateID">State<span class="required-feilds">*</span></label>
                             <select class="form-control" v-model="state" id="state">
                                 <option value="">Select State</option>
-                                <option v-for="state in states" :key="state" value="state.id" >{{state.state}}</option>
+                                <option v-for="state in states" :key="state" :value="state.id">{{state.state}}</option>
                             </select>
                         </div>
                         <div class="form-group col-md-6">
@@ -91,7 +91,7 @@
                             <label for="bankName">Bank Name<span class="required-feilds">*</span></label>
                             <select class="form-control" v-model="bank_name" id="bank_name">
                                 <option value="">Select Bank</option>
-                                <option v-for="bank in banks" :key="bank.name" value="bank.id">{{bank.bank_name}}</option>
+                                <option v-for="bank in banks" :key="bank.name" :value="bank.id">{{bank.bank_name}}</option>
                             </select>
                         </div>
                             <div class="form-group col-md-6">
@@ -138,7 +138,7 @@
             full_address: {
                 required
             },
-            state_id: {
+            state: {
                 required
             },
             date_of_birth: {
@@ -182,7 +182,7 @@
                 bank_name:this.bank_name,
                 account_type:this.user.account_type,
                 branch:this.user.branch,
-                successMessage:""
+                successMessage:''
             }
         },
         //beforeRouteEnter (to, from, next) {
@@ -232,10 +232,10 @@
                     date_of_birth: this.date_of_birth,
                     account_name: this.account_name,
                     account_number: this.account_number,
-                    bank_id: this.bank_id,
+                    bank_id: this.bank_name,
                     account_type: this.account_type,
                     branch: this.branch,
-                    state_id:this.state_id
+                    state_id:this.state
                 };
                 //console.log(payload)
                 // return;
