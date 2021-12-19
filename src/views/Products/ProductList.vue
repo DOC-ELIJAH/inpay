@@ -56,7 +56,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="prod in product" >
+                            <tr v-for="(prod, id) in product" :key="id" @click="setActiveProduct(product, id)">
                                 <td>{{ prod.Product.id }}</td>
                                 <td>
                                     <div class="d-flex align-items-center">
@@ -102,13 +102,14 @@
     export default {
         data(){
             return {
-                product: []
+                product: [],
+                currentProduct: null,
+                id: -1
                 
             }
         },
         methods: {
-            retrieveProduct() {
-                let data = 
+            retrieveProduct() { 
                 productList()
                 .then(response=>{
                     this.product = response.data.response.records;
@@ -117,13 +118,23 @@
                 .catch(e=>{
                 });
             },
+            refreshList() {
+                this.retrieveProduct();
+                this.currentProduct = null
+                this.id = -1
+            },
+            setActiveProduct(product, id) {
+                this.currentProduct = product;
+                this.id = id;
+
+            },
             navigate(path){
                 this.$router.push({path : path})
             },
-            removeAllProduct() {
+            removeProduct() {
                 productDelete()
                 .then(response=> {
-                    console.log(response.data);
+                    console.log(response.data.response.records);
                     this.refreshList();
                 })
                 .catch(e=>{

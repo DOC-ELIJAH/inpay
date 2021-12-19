@@ -24,7 +24,7 @@ export async function productUpdate(id, data) {
     return response;
 }
 
-export async function productDelete() {
+export async function productDelete(id) {
     const response = await axios.del(`${baseUrl}products/${id}`)
     return response;
 }
