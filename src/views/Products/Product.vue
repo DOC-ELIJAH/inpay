@@ -69,13 +69,13 @@
             },
             updateProduct() {
                 let data = {
-                    id: this.currentProduct.Product.id,
-                    Name: this.currentProduct.Product.Name,
-                    Description: this.currentProduct.Product.Description,
-                    Category: this.currentProduct.Product.Category,
-                    Cost_Price: this.currentProduct.Product.Cost_Price,
-                    Selling_Price: this.currentProduct.Product.Selling_Price,
-                    Availability: this.currentProduct.Product.Availability,
+                   // id: this.currentProduct.Product.id,
+                    product_name: this.currentProduct.Product.Name,
+                    product_description: this.currentProduct.Product.Description,
+                    product_ategory: this.currentProduct.Product.Category,
+                    cost_price: this.currentProduct.Product.Cost_Price,
+                    selling_price: this.currentProduct.Product.Selling_Price,
+                    availability: this.currentProduct.Product.Availability,
                 };
                 console.log(data)
                 productUpdate(this.currentProduct.Product.id, data)
