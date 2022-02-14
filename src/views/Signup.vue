@@ -200,6 +200,7 @@ export default {
                       if(e.msg.includes('Phone')){
                          this.errors.phoneNumber=e.msg
                        }
+                       
                     })
                     btn.innerHTML='Create Account'
                     btn.removeAttribute("disabled", null)
@@ -207,6 +208,15 @@ export default {
                     this.successMessage=res.email_notify
 					          btn.innerHTML='Create Account'
                     btn.removeAttribute("disabled", null)
+                    this.firstName="";
+                    this.lastName="";
+                    this.email="";
+                    this.phoneNumber="";
+                    this.password="";
+                    // this.$v.firstname.$dirty=false;
+                    // this.$v.$errors=null;
+                    //this.$v.$invalid=false;
+                    // return;
                   }
                   //this.$router.push({path:'/auth/account-confirm/'});
                 }).catch(err=>{
@@ -214,10 +224,12 @@ export default {
                    btn.innerHTML='Create Account'
                   btn.removeAttribute("disabled", null)
                 })
-              
-              }
-          },
+
+              }              
+
+        
+          }
            
-        }
+        },
     }
 </script>
