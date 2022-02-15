@@ -213,10 +213,7 @@ export default {
                     this.email="";
                     this.phoneNumber="";
                     this.password="";
-                    // this.$v.firstname.$dirty=false;
-                    // this.$v.$errors=null;
-                    //this.$v.$invalid=false;
-                    // return;
+                    this.$v.$reset()
                   }
                   //this.$router.push({path:'/auth/account-confirm/'});
                 }).catch(err=>{
@@ -224,12 +221,8 @@ export default {
                    btn.innerHTML='Create Account'
                   btn.removeAttribute("disabled", null)
                 })
-
               }              
-
-        
           }
-           
         },
     }
 </script>
