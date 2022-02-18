@@ -92,11 +92,11 @@
 
                         <div class="form-group">
                             <label class="font-weight-semibold" for="password"
-                              >Password: <span class="required-feilds">*</span></label
-                            >
-                            <div class="input-affix m-b-10">
-                              <i class="prefix-icon anticon anticon-lock"></i>
+                              >Password: <span class="required-feilds">*</span></label>
+                            <div v-if="passwordHidden" class="input-affix m-b-10">
+                              <i @click="hidePassword()" class="prefix-icon anticon anticon-lock"></i>
                               <input
+                              id="password"
                                 type="password"
                                 class="form-control"
                                 v-model="password"
@@ -104,7 +104,7 @@
                                 pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$"
                                 required
                               />
-                              <i toggle="#password" class="suffix-icon anticon anticon-eye toggle-password"></i>
+                              <i @click="showPassword()" toggle="#password" class="suffix-icon anticon anticon-eye toggle-password"></i>
                               <!-- <span class="invalid-feedback">Please enter at least one upper case.</span> -->
                             </div>
                               <div class="invalid-feedback">Please enter at least one upper case.</div>
@@ -147,6 +147,10 @@ export default {
               }
         },
         data: () => ({
+            passwordHidden : {
+              default: false,
+              type: Boolean,
+            },
             errorMessages:'',
             successMessage:'',
             errorMessage:'',
@@ -165,6 +169,16 @@ export default {
          }),
        
         methods: {
+          showPassword () {
+            // this.passwordHidden = false
+         let pass = document.getElementById('password');
+         if(pass.type == 'password'){
+           pass.type = 'text'
+         }else{
+           pass.type = 'password'
+         }
+          },
+        
           submit () {
             this.errorMessages=''
             this.errorMessage=''
